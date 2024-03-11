@@ -5,50 +5,27 @@ import { sessionOptions } from "../../lib/constants";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-zinc-700/80">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-zinc-800/90">
       <NavBar />
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/assets/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <div></div>
 
       <Footer />
     </main>
   );
 }
 import HiveIcon from "@/assets/svg/HiveIcon";
+import MenuBar from "../../components/MenuBar";
 async function NavBar() {
   const user = await getIronSession(cookies(), sessionOptions);
   return (
-    <nav className="flex items-center justify-between w-full p-8 lg:mx-20 bg-gradient-to-b from-zinc-200 to-zinc-100 dark:from-zinc-800/30 dark:to-zinc-800/30">
+    <nav className="flex lg:px-64 items-center justify-between w-full p-8 bg-gradient-to-b from-zinc-200 to-zinc-100 dark:from-zinc-800 dark:to-zinc-800/80">
       <div className="flex items-center gap-4">
         <HiveIcon className="w-8" />
         <h1 className="text-2xl font-bold text-amber-300">Probee Portal</h1>
       </div>
       <div className="flex items-center gap-4">
-        <a
-          href="https://nextjs.org/docs"
-          className="text-lg font-semibold hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Docs
-        </a>
-        <a
-          href="https://nextjs.org/learn"
-          className="text-lg font-semibold hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn
-        </a>
+        <MenuBar />
       </div>
     </nav>
   );
