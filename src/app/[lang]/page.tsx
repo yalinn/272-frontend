@@ -15,7 +15,6 @@ export default function Home() {
   );
 }
 import HiveIcon from "@/assets/svg/HiveIcon";
-import MenuBar from "../../components/MenuBar";
 async function NavBar() {
   const user = await getIronSession(cookies(), sessionOptions);
   return (
@@ -101,6 +100,16 @@ export function Footer() {
           Instantly deploy your Next.js site to a shareable URL with Vercel.
         </p>
       </a>
+    </div>
+  );
+}
+
+export function MenuBar() {
+  return (
+    <div className="flex items-center gap-4">
+      <button className="p-2 rounded-lg bg-amber-300 text-zinc-100 hover:bg-amber-400 hover:text-zinc-100 dark:bg-amber-300/80 dark:hover:bg-amber-400/80">
+        Sign In
+      </button>
     </div>
   );
 }
