@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export const metadata: Metadata = {
   title: "ProBee Çankaya Portalı",
   description: "Seng272 Proje Ödevi",
@@ -16,14 +15,14 @@ export async function generateStaticParams() {
 }
 export default function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
   params: { lang: string };
 }>) {
   return (
     <html lang={params.lang}>
-      <body className={cn(inter.className, "bg-hexagon")}>{children}</body>
+      <body className={cn(inter.className)}>{children}</body>
     </html>
   );
 }

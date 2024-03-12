@@ -54,16 +54,13 @@ const langs = {
   },
 };
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, set, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
-import { cn } from "../../lib/utils";
-const FormDemo = ({
-  language,
-}: /* setOpen, */
-{
-  language: string;
-  /* setOpen: (...args: any) => void; */
-}) => {
+import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
+import { Label } from "@/lib/ui/label";
+import { Switch } from "@/lib/ui/switch";
+const FormDemo = ({ language }: { language: string }) => {
   const {
     setValue,
     register,
@@ -72,9 +69,12 @@ const FormDemo = ({
     setError,
     clearErrors,
   } = useForm({ mode: "onChange" });
-  const [errs, setErrs] = React.useState<string[]>([]);
+  const [err, setErr] = React.useState<string | null>(null);
+  const [isStudent, setIsStudent] = React.useState(true);
   const onSubmit: SubmitHandler<any> = async (data) => {
-    const res = await fetch(`/auth`, {
+    data.user_type = isStudent ? "student" : "teacher";
+    console.log({ username: data.username, user_type: data.user_type });
+    const res = await fetch(`/api/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,18 +82,28 @@ const FormDemo = ({
       body: JSON.stringify(data),
     }).then((res) => res.json());
     if (res.token) {
-      /* setOpen(false); */
-      document.location.reload();
-    }
-    if (Object.keys(res).length !== 0) {
-      setErrs(() => Object.keys(res));
+      window.location.reload();
     } else {
-      /* setOpen(false); */
+      setErr(res.message);
     }
   };
   const lang = language === "en" ? langs.en : langs.tr;
   return (
     <Form.Root className="grid gap-4 py-4">
+      <div className="grid grid-cols-4 items-center gap-4">
+        <span className={cn(isStudent ? "text-green-600" : "text-neutral-900")}>
+          Öğrenciyim
+        </span>
+        <div className="flex text-black items-center col-span-3 space-x-2">
+          <Switch id="airplane-mode" onClick={() => setIsStudent((s) => !s)} />
+          <Label
+            htmlFor="airplane-mode"
+            className={isStudent ? "" : "text-green-600"}
+          >
+            Öğretim Görevlisiyim
+          </Label>
+        </div>
+      </div>
       {lang.inputs.map((input, index) => (
         <Form.Field
           className="grid grid-cols-4 items-center gap-4"
@@ -120,13 +130,6 @@ const FormDemo = ({
                 {...input}
               />
             </Form.Control>
-            {["username", "email"].some(
-              (k) => errs.includes(k) && input.id === k
-            ) && (
-              <Form.Message className="text-red-600">
-                {input.alreadyexists || ""}
-              </Form.Message>
-            )}
             {errors[input.id] && (
               <Form.Message className="absolute -top-4 text-red-500 text-right">
                 {input.valuemissing}
@@ -136,7 +139,7 @@ const FormDemo = ({
         </Form.Field>
       ))}
       <div className="grid grid-cols-4 items-center gap-4">
-        <br className="col-span-3" />
+        <br className="" />
         <div className="flex flex-col col-span-3 h-full justify-center relative">
           <Form.Submit
             className="w-full bg-blue-500 text-black rounded-md p-2"
@@ -151,6 +154,9 @@ const FormDemo = ({
               {lang.submit}
             </Button>
           </Form.Submit>
+          {err && (
+            <div className="absolute -top-4 text-red-500 text-right">{err}</div>
+          )}
         </div>
       </div>
     </Form.Root>

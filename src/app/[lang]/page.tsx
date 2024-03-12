@@ -1,14 +1,21 @@
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
 import Image from "next/image";
-import { sessionOptions } from "../../lib/constants";
 import HiveIcon from "@/assets/svg/HiveIcon";
-import { DialogDemo } from "../../components/JoinDialog";
 import { cn } from "../../lib/utils";
 import getDictionary, { LangType } from "../../lang";
+import { getIronSession } from "iron-session";
+import { cookies } from "next/headers";
+import { RedirectType, redirect } from "next/navigation";
+import { sessionOptions } from "@/lib/constants";
 
 export default async function Home({ params }: { params: { lang: string } }) {
   const lang = await getDictionary(params.lang);
+  const session = await getIronSession<{ token: any }>(
+    cookies(),
+    sessionOptions
+  );
+  if (!session.token) {
+    redirect("/sign-in", RedirectType.push);
+  }
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-gray-800/90">
       <NavBar lang={lang} />
@@ -34,13 +41,6 @@ async function NavBar({ lang }: { lang: LangType }) {
         <h1 className={cn("text-2xl font-bold text-amber-300", "ml-2")}>
           Probee
         </h1>
-      </div>
-      <div className="flex items-center gap-4">
-        <DialogDemo lang="tr">
-          <div className="p-2 rounded-xl transition-colors duration-500 bg-amber-300 text-zinc-900 hover:bg-amber-400 hover:text-zinc-700 dark:bg-amber-300/80 dark:hover:bg-amber-400/80">
-            {lang.nav.sign_in}
-          </div>
-        </DialogDemo>
       </div>
     </nav>
   );

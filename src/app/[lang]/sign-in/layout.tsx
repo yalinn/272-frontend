@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
-
 export const metadata: Metadata = {
   title: "ProBee Çankaya Portalı",
   description: "Seng272 Proje Ödevi",
@@ -16,7 +15,7 @@ export async function generateStaticParams() {
 }
 export default function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
   params: { lang: string };
