@@ -16,7 +16,7 @@
   }
 }
 .bg-hexagon {
-  --color-hex-outline: #fcd34d;
+  --color-hex-outline: rgb(252 211 77);
   width: 100%;
   height: 100%;
   background: radial-gradient(circle farthest-side at 0% 50%,

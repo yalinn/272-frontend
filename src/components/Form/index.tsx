@@ -14,16 +14,16 @@ const langs = {
         label: "Username",
         id: "username",
         defaultValue: "",
-        valueMissing: "Please enter your username",
-        alreadyExists: "This username already exists",
+        valuemissing: "Please enter your username",
+        alreadyexists: "This username already exists",
         type: "text",
       },
       {
         label: "Parola",
         id: "password",
         defaultValue: "",
-        valueMissing: "Please enter your password",
-        alreadyExists: "This password already exists",
+        valuemissing: "Please enter your password",
+        alreadyexists: "This password already exists",
         type: "password",
       },
     ],
@@ -38,16 +38,16 @@ const langs = {
         label: "Kullanıcı adı",
         id: "username",
         defaultValue: "",
-        valueMissing: "Lütfen kullanıcı adınızı girin",
-        alreadyExists: "Bu kullanıcı adı zaten mevcut",
+        valuemissing: "Lütfen kullanıcı adınızı girin",
+        alreadyexists: "Bu kullanıcı adı zaten mevcut",
         type: "text",
       },
       {
         label: "Parola",
         id: "password",
         defaultValue: "",
-        valueMissing: "Lütfen parolanızı girin",
-        alreadyExists: "Bu parola zaten mevcut",
+        valuemissing: "Lütfen parolanızı girin",
+        alreadyexists: "Bu parola zaten mevcut",
         type: "password",
       },
     ],
@@ -56,12 +56,13 @@ const langs = {
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
+import { cn } from "../../lib/utils";
 const FormDemo = ({
   language,
-  setOpen,
-}: {
+}: /* setOpen, */
+{
   language: string;
-  setOpen: (...args: any) => void;
+  /* setOpen: (...args: any) => void; */
 }) => {
   const {
     setValue,
@@ -81,13 +82,13 @@ const FormDemo = ({
       body: JSON.stringify(data),
     }).then((res) => res.json());
     if (res.token) {
-      setOpen(false);
+      /* setOpen(false); */
       document.location.reload();
     }
     if (Object.keys(res).length !== 0) {
       setErrs(() => Object.keys(res));
     } else {
-      setOpen(false);
+      /* setOpen(false); */
     }
   };
   const lang = language === "en" ? langs.en : langs.tr;
@@ -100,13 +101,18 @@ const FormDemo = ({
           key={input.id}
           typeof={input.type || "text"}
         >
-          <Form.Label className="text-right w-full text-xs md:text-sm">
+          <Form.Label className="text-right text-black w-full text-xs md:text-sm">
             {input.label}
           </Form.Label>
           <div className="flex flex-col col-span-3 h-full justify-center relative">
             <Form.Control asChild>
               <input
-                className=" bg-white/10 border border-white/20 rounded-md px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className={cn(
+                  " bg-black/50 border border-black/20 rounded-xl px-3 py-2 text-sm ring-offset-white",
+                  "file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  "disabled:cursor-not-allowed disabled:opacity-50 first:bg-black/1*"
+                )}
                 {...register(input.id, {
                   required: true,
                   maxLength: 40,
@@ -118,25 +124,35 @@ const FormDemo = ({
               (k) => errs.includes(k) && input.id === k
             ) && (
               <Form.Message className="text-red-600">
-                {input.alreadyExists}
+                {input.alreadyexists || ""}
               </Form.Message>
             )}
             {errors[input.id] && (
               <Form.Message className="absolute -top-4 text-red-500 text-right">
-                {input.valueMissing}
+                {input.valuemissing}
               </Form.Message>
             )}
           </div>
         </Form.Field>
       ))}
-      <Form.Submit
-        className="w-full bg-blue-500 text-white rounded-md p-2"
-        asChild
-      >
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>
-          {lang.submit}
-        </Button>
-      </Form.Submit>
+      <div className="grid grid-cols-4 items-center gap-4">
+        <br className="col-span-3" />
+        <div className="flex flex-col col-span-3 h-full justify-center relative">
+          <Form.Submit
+            className="w-full bg-blue-500 text-black rounded-md p-2"
+            asChild
+          >
+            <Button
+              type="submit"
+              variant={"ghost"}
+              className="cursor-pointer bg-neutral-800 text-white rounded-xl transition-colors duration-300 ease-in-out"
+              onClick={handleSubmit(onSubmit)}
+            >
+              {lang.submit}
+            </Button>
+          </Form.Submit>
+        </div>
+      </div>
     </Form.Root>
   );
 };
