@@ -2,11 +2,16 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import { sessionOptions } from "../../lib/constants";
+import HiveIcon from "@/assets/svg/HiveIcon";
+import { DialogDemo } from "../../components/JoinDialog";
+import { cn } from "../../lib/utils";
+import getDictionary, { LangType } from "../../lang";
 
-export default function Home() {
+export default async function Home({ params }: { params: { lang: string } }) {
+  const lang = await getDictionary(params.lang);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-zinc-800/90">
-      <NavBar />
+    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-gray-800/90">
+      <NavBar lang={lang} />
 
       <div></div>
 
@@ -14,17 +19,28 @@ export default function Home() {
     </main>
   );
 }
-import HiveIcon from "@/assets/svg/HiveIcon";
-async function NavBar() {
+async function NavBar({ lang }: { lang: LangType }) {
   const user = await getIronSession(cookies(), sessionOptions);
   return (
-    <nav className="flex lg:px-64 items-center justify-between w-full p-8 bg-gradient-to-b from-zinc-200 to-zinc-100 dark:from-zinc-800 dark:to-zinc-800/80">
-      <div className="flex items-center gap-4">
+    <nav
+      className={cn(
+        "flex lg:px-64 items-center justify-between w-full p-8",
+        "bg-gradient-to-b from-zinc-200 to-zinc-100 dark:from-gray-900 dark:to-gray-900/30",
+        "border-b border-gray-300/30"
+      )}
+    >
+      <div className="flex items-center">
         <HiveIcon className="w-8" />
-        <h1 className="text-2xl font-bold text-amber-300">Probee Portal</h1>
+        <h1 className={cn("text-2xl font-bold text-amber-300", "ml-2")}>
+          Probee
+        </h1>
       </div>
       <div className="flex items-center gap-4">
-        <MenuBar />
+        <DialogDemo lang="tr">
+          <div className="p-2 rounded-xl transition-colors duration-500 bg-amber-300 text-zinc-900 hover:bg-amber-400 hover:text-zinc-700 dark:bg-amber-300/80 dark:hover:bg-amber-400/80">
+            {lang.nav.sign_in}
+          </div>
+        </DialogDemo>
       </div>
     </nav>
   );
@@ -100,16 +116,6 @@ export function Footer() {
           Instantly deploy your Next.js site to a shareable URL with Vercel.
         </p>
       </a>
-    </div>
-  );
-}
-
-export function MenuBar() {
-  return (
-    <div className="flex items-center gap-4">
-      <button className="p-2 rounded-lg bg-amber-300 text-zinc-100 hover:bg-amber-400 hover:text-zinc-100 dark:bg-amber-300/80 dark:hover:bg-amber-400/80">
-        Sign In
-      </button>
     </div>
   );
 }

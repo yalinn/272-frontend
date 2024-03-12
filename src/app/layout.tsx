@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "../lib/utils";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
-
+const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "ProBee Çankaya Portalı",
@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 }
 export default function RootLayout({
   children,
-  params
+  params,
 }: Readonly<{
   children: React.ReactNode;
   params: { lang: string };
