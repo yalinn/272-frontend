@@ -1,5 +1,4 @@
 export default {
-    nav: {
-        sign_in: "Giriş"
-    }
+    sign_in: "Giriş",
+    sign_out: "Çıkış",
 };

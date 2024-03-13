@@ -1,5 +1,4 @@
 export default {
-    nav: {
-        sign_in: "Sign In"
-    }
+    sign_in: "Sign In",
+    sign_out: "Sign Out",
 };

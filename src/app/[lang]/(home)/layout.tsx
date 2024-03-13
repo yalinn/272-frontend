@@ -1,13 +1,34 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+/* import "./globals.css"; */
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "ProBee Çankaya Portalı",
+  description: "Seng272 Proje Ödevi",
+};
+
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "tr" }];
+}
+
+import { cn } from "@/lib/utils";
 import HiveIcon from "@/assets/svg/HiveIcon";
-import { cn } from "../../lib/utils";
-import getDictionary, { LangType } from "../../lang";
+import getDictionary, { LangType } from "@/lang";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
+import Link from "next/link";
 
-export default async function Home({ params }: { params: { lang: string } }) {
+export default async function RootLayout({
+  children,
+  params,
+}: Readonly<{
+  children: React.ReactNode;
+  params: { lang: string };
+}>) {
   const lang = await getDictionary(params.lang);
   const session = await getIronSession<{ token: any }>(
     cookies(),
@@ -17,17 +38,19 @@ export default async function Home({ params }: { params: { lang: string } }) {
     redirect("/sign-in", RedirectType.push);
   }
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-gray-800/90">
-      <NavBar lang={lang} />
-
-      <div></div>
-
-      <Footer />
-    </main>
+    <html lang={params.lang}>
+      <body className={cn(inter.className)}>
+        <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-gray-800/90">
+          <NavBar lang={lang} />
+          {children}
+          <Footer />
+        </main>
+      </body>
+    </html>
   );
 }
+
 async function NavBar({ lang }: { lang: LangType }) {
-  const user = await getIronSession(cookies(), sessionOptions);
   return (
     <nav
       className={cn(
@@ -42,6 +65,18 @@ async function NavBar({ lang }: { lang: LangType }) {
           Probee
         </h1>
       </div>
+
+      <Link href="/api/logout" title="Sign out">
+        <div
+          className={cn(
+            "text-xl font-semibold text-neutral-300",
+            "hover:text-neutral-100",
+            "flex items-center cursor-pointer"
+          )}
+        >
+          {lang.sign_out}
+        </div>
+      </Link>
     </nav>
   );
 }

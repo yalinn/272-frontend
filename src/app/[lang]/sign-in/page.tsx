@@ -19,19 +19,17 @@ export default async function Home({ params }: { params: { lang: string } }) {
   }
   const lang = await getDictionary(params.lang);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-gray-800/90">
-      <div className="flex rounded-3xl flex-col lg:flex-row bg-white/80 p-6 m-6">
-        <Image
-          className="self-center p-4"
-          src={"/assets/logo.png"}
-          alt="Cankaya University Probee Application"
-          width={200}
-          height={200}
-        />
-        <div className="flex">
-          <FormDemo language={params.lang} />
-        </div>
+    <div className="flex rounded-3xl flex-col lg:flex-row bg-white/80 p-6 m-6">
+      <Image
+        className="self-center p-4"
+        src={"/assets/logo.png"}
+        alt="Cankaya University Probee Application"
+        width={200}
+        height={200}
+      />
+      <div className="flex">
+        <FormDemo language={params.lang} />
       </div>
-    </main>
+    </div>
   );
 }

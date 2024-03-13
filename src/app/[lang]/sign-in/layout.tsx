@@ -22,7 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={params.lang}>
-      <body className={cn(inter.className, "bg-hexagon")}>{children}</body>
+      <body className={cn(inter.className, "bg-hexagon")}>
+        <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-gray-800/90">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }

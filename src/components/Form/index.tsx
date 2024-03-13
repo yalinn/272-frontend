@@ -57,7 +57,6 @@ const langs = {
 import { SubmitHandler, set, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
 import { Label } from "@/lib/ui/label";
 import { Switch } from "@/lib/ui/switch";
 const FormDemo = ({ language }: { language: string }) => {
@@ -73,7 +72,6 @@ const FormDemo = ({ language }: { language: string }) => {
   const [isStudent, setIsStudent] = React.useState(true);
   const onSubmit: SubmitHandler<any> = async (data) => {
     data.user_type = isStudent ? "student" : "teacher";
-    console.log({ username: data.username, user_type: data.user_type });
     const res = await fetch(`/api/auth`, {
       method: "POST",
       headers: {
