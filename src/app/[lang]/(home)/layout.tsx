@@ -59,12 +59,12 @@ async function NavBar({ lang }: { lang: LangType }) {
         "border-b border-gray-300/30"
       )}
     >
-      <div className="flex items-center">
+      <Link className="flex items-center" href="/">
         <HiveIcon className="w-8" />
         <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
           Probee
         </h1>
-      </div>
+      </Link>
 
       <Link href="/api/logout" title="Sign out">
         <div
