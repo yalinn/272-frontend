@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import * as Form from "@radix-ui/react-form";
 import "./styles.css";
 
@@ -9,6 +9,8 @@ const langs = {
     desctiption:
       "Make changes to your profile here. Click save when you're done.",
     submit: "Submit",
+    im_a_teacher: "I'm a teacher",
+    im_a_student: "I'm a student",
     inputs: [
       {
         label: "Username",
@@ -19,7 +21,7 @@ const langs = {
         type: "text",
       },
       {
-        label: "Parola",
+        label: "Password",
         id: "password",
         defaultValue: "",
         valuemissing: "Please enter your password",
@@ -33,6 +35,8 @@ const langs = {
     desctiption:
       "Profilinizi buradan düzenleyin. Bittiğinizde kaydet'e tıklayın.",
     submit: "Gönder",
+    im_a_teacher: "Öğretim görevlisiyim",
+    im_a_student: "Öğrenciyim",
     inputs: [
       {
         label: "Kullanıcı adı",
@@ -54,19 +58,16 @@ const langs = {
   },
 };
 
-import { SubmitHandler, set, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
 import { cn } from "@/lib/utils";
 import { Label } from "@/lib/ui/label";
 import { Switch } from "@/lib/ui/switch";
 const FormDemo = ({ language }: { language: string }) => {
   const {
-    setValue,
     register,
     handleSubmit,
     formState: { errors },
-    setError,
-    clearErrors,
   } = useForm({ mode: "onChange" });
   const [err, setErr] = React.useState<string | null>(null);
   const [isStudent, setIsStudent] = React.useState(true);
@@ -90,7 +91,7 @@ const FormDemo = ({ language }: { language: string }) => {
     <Form.Root className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
         <span className={cn(isStudent ? "text-green-600" : "text-neutral-900")}>
-          Öğrenciyim
+          {lang.im_a_student}
         </span>
         <div className="flex text-black items-center col-span-3 space-x-2">
           <Switch id="airplane-mode" onClick={() => setIsStudent((s) => !s)} />
@@ -98,7 +99,7 @@ const FormDemo = ({ language }: { language: string }) => {
             htmlFor="airplane-mode"
             className={isStudent ? "" : "text-green-600"}
           >
-            Öğretim Görevlisiyim
+            {lang.im_a_teacher}
           </Label>
         </div>
       </div>
