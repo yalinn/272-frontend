@@ -40,7 +40,7 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body className={cn(inter.className)}>
-        <main className="flex min-h-screen flex-col items-center justify-between bg-zinc-100 dark:bg-gray-800/90">
+        <main className="flex min-h-screen flex-col items-center justify-between dark:bg-[#09090b] bg-[#fbfbfd]">
           <NavBar lang={lang} />
           {children}
           <Footer />
@@ -55,13 +55,13 @@ async function NavBar({ lang }: { lang: LangType }) {
     <nav
       className={cn(
         "flex lg:px-64 items-center justify-between w-full p-8",
-        "bg-gradient-to-b from-zinc-200 to-zinc-100 dark:from-gray-900 dark:to-gray-900/30",
+        "dark:bg-[#09090b] bg-[#fbfbfd]",
         "border-b border-gray-300/30"
       )}
     >
       <div className="flex items-center">
         <HiveIcon className="w-8" />
-        <h1 className={cn("text-2xl font-bold text-amber-300", "ml-2")}>
+        <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
           Probee
         </h1>
       </div>
