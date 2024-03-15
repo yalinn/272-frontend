@@ -1,9 +1,9 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { sessionOptions } from "@/lib/constants";
-import type { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: NextRequest) {
   const session = await getIronSession(cookies(), sessionOptions);
   if (session) {
     await session.destroy();
