@@ -126,7 +126,7 @@ const FormDemo = ({ language }: { language: string }) => {
           key={input.id}
           typeof={input.type || "text"}
         >
-          <Form.Label className="text-right dark:text-neutral-300 w-full text-xs md:text-sm">
+          <Form.Label className="text-right text-[#fec748] w-full text-xs md:text-sm">
             {input.label}
           </Form.Label>
           <div className="flex flex-col col-span-3 h-full justify-center relative">
@@ -159,8 +159,8 @@ const FormDemo = ({ language }: { language: string }) => {
           <Form.Submit className="w-full text-black rounded-md p-2" asChild>
             <Button
               type="submit"
-              variant={"ghost"}
-              className="cursor-pointer text-white rounded-xl transition-colors duration-300 ease-in-out"
+              variant={"honey"}
+              className="cursor-pointer rounded-xl transition-colors duration-300 ease-in-out"
               onClick={handleSubmit(onSubmit)}
             >
               {loading ? (
@@ -171,7 +171,9 @@ const FormDemo = ({ language }: { language: string }) => {
             </Button>
           </Form.Submit>
           {err && (
-            <div className="absolute top-8 text-red-500 text-right">{err}</div>
+            <div className="absolute -bottom-3 -left-3 text-red-500 bg-[#09090b]/70 p-2 rounded-2xl text-right">
+              {err}
+            </div>
           )}
         </div>
       </div>

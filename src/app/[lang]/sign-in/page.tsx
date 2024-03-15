@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
 import HiveIcon from "@/assets/svg/HiveIcon";
+import LogoSVG from "../../../assets/svg/logo";
 
 export default async function Home({ params }: { params: { lang: string } }) {
   const session = await getIronSession<{ token: any }>(
@@ -21,6 +22,12 @@ export default async function Home({ params }: { params: { lang: string } }) {
         width={200}
         height={200}
       />
+      {/* <LogoSVG
+        className="self-center p-4"
+        alt="Cankaya University Probee Application"
+        width={250}
+        height={250}
+      /> */}
       <div className="flex">
         <FormDemo language={params.lang} />
       </div>

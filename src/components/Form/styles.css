@@ -99,7 +99,7 @@ button {
 
 #loading {
     border: 2px solid transparent;
-    border-top: 4px solid rgb(253 224 71);
+    border-top: 4px solid #09090b;
     border-radius: 100%;
     animation: spin 1s infinite ease-out;
 }
