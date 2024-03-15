@@ -1,6 +1,6 @@
 const config = {
     PORT: "3000",
-    PUBLIC_URL: "https://probee.yalin.app",
+    PUBLIC_URL: "https://www.yalin.app",
     WEBSITE_VERSION: '0.0.1',
     API_ENDPOINT: "https://api-probee.yalin.app",
     API_PORT: "8080",
