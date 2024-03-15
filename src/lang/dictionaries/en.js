@@ -5,5 +5,5 @@ export default {
     im_teacher: "I'm a professor",
     username: "Username",
     password: "Password",
-    submit: "Submit",
+    submit: "Log In",
 };

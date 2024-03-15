@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { Roboto } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "ProBee Çankaya Portalı",
@@ -22,8 +21,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={params.lang}>
-      <body className={cn(inter.className, "bg-hexagon")}>
-        <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-gray-800/90">
+      <body className={inter.className}>
+        <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-[#09090b]">
           {children}
         </main>
       </body>

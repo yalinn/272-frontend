@@ -5,5 +5,5 @@ export default {
     im_teacher: "Öğretmenim",
     username: "Kullanıcı Adı",
     password: "Parola",
-    submit: "Gönder",
+    submit: "Giriş Yap",
 };

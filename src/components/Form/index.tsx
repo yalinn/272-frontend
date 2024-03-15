@@ -8,7 +8,7 @@ const langs = {
     title: "Edit your profile",
     desctiption:
       "Make changes to your profile here. Click save when you're done.",
-    submit: "Submit",
+    submit: "Log in",
     im_a_teacher: "I'm a teacher",
     im_a_student: "I'm a student",
     inputs: [
@@ -34,7 +34,7 @@ const langs = {
     title: "Profilinizi düzenleyin",
     desctiption:
       "Profilinizi buradan düzenleyin. Bittiğinizde kaydet'e tıklayın.",
-    submit: "Gönder",
+    submit: "Giriş Yap",
     im_a_teacher: "Öğretim görevlisiyim",
     im_a_student: "Öğrenciyim",
     inputs: [
@@ -90,17 +90,28 @@ const FormDemo = ({ language }: { language: string }) => {
   return (
     <Form.Root className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
-        <span className={cn(isStudent ? "text-green-600" : "text-neutral-900")}>
+        <span
+          className={cn(
+            isStudent
+              ? "bg-yellow-300 dark:text-neutral-900"
+              : "dark:text-neutral-300 bg-neutral-500/10",
+            "p-2 rounded-xl"
+          )}
+        >
           {lang.im_a_student}
         </span>
-        <div className="flex text-black items-center col-span-3 space-x-2">
+        <div className="flex dark:text-neutral-300 items-center col-span-3 space-x-2">
           <Switch id="airplane-mode" onClick={() => setIsStudent((s) => !s)} />
-          <Label
-            htmlFor="airplane-mode"
-            className={isStudent ? "" : "text-green-600"}
+          <span
+            className={cn(
+              isStudent
+                ? "bg-neutral-500/10"
+                : "bg-yellow-500 dark:text-neutral-900",
+              "p-2 rounded-xl"
+            )}
           >
             {lang.im_a_teacher}
-          </Label>
+          </span>
         </div>
       </div>
       {lang.inputs.map((input, index) => (
@@ -110,7 +121,7 @@ const FormDemo = ({ language }: { language: string }) => {
           key={input.id}
           typeof={input.type || "text"}
         >
-          <Form.Label className="text-right text-black w-full text-xs md:text-sm">
+          <Form.Label className="text-right dark:text-neutral-300 w-full text-xs md:text-sm">
             {input.label}
           </Form.Label>
           <div className="flex flex-col col-span-3 h-full justify-center relative">
@@ -140,14 +151,11 @@ const FormDemo = ({ language }: { language: string }) => {
       <div className="grid grid-cols-4 items-center gap-4">
         <br className="" />
         <div className="flex flex-col col-span-3 h-full justify-center relative">
-          <Form.Submit
-            className="w-full bg-blue-500 text-black rounded-md p-2"
-            asChild
-          >
+          <Form.Submit className="w-full text-black rounded-md p-2" asChild>
             <Button
               type="submit"
               variant={"ghost"}
-              className="cursor-pointer bg-neutral-800 text-white rounded-xl transition-colors duration-300 ease-in-out"
+              className="cursor-pointer text-white rounded-xl transition-colors duration-300 ease-in-out"
               onClick={handleSubmit(onSubmit)}
             >
               {lang.submit}

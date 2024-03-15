@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "../lib/utils";
 import { Roboto } from "next/font/google";
 
 const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
@@ -23,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={params.lang}>
-      <body className={cn(inter.className, "bg-hexagon")}>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
