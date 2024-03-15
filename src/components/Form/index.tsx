@@ -58,10 +58,9 @@ const langs = {
   },
 };
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, set, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
 import { cn } from "@/lib/utils";
-import { Label } from "@/lib/ui/label";
 import { Switch } from "@/lib/ui/switch";
 const FormDemo = ({ language }: { language: string }) => {
   const {
@@ -71,7 +70,9 @@ const FormDemo = ({ language }: { language: string }) => {
   } = useForm({ mode: "onChange" });
   const [err, setErr] = React.useState<string | null>(null);
   const [isStudent, setIsStudent] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const onSubmit: SubmitHandler<any> = async (data) => {
+    setLoading(true);
     data.user_type = isStudent ? "student" : "teacher";
     const res = await fetch(`/api/auth`, {
       method: "POST",
@@ -79,8 +80,12 @@ const FormDemo = ({ language }: { language: string }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }).then((res) => res.json());
+    }).then((res) => {
+      setLoading(false);
+      return res.json();
+    });
     if (res.token) {
+      setErr("");
       window.location.reload();
     } else {
       setErr(res.message);
@@ -90,24 +95,24 @@ const FormDemo = ({ language }: { language: string }) => {
   return (
     <Form.Root className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
-        <span
-          className={cn(
-            isStudent
-              ? "bg-yellow-300 dark:text-neutral-900"
-              : "dark:text-neutral-300 bg-neutral-500/10",
-            "p-2 rounded-xl"
-          )}
-        >
-          {lang.im_a_student}
-        </span>
         <div className="flex dark:text-neutral-300 items-center col-span-3 space-x-2">
+          <span
+            className={cn(
+              isStudent
+                ? "bg-[#fec748] dark:text-neutral-900"
+                : "dark:text-neutral-300 bg-neutral-500/10",
+              "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
+            )}
+          >
+            {lang.im_a_student}
+          </span>
           <Switch id="airplane-mode" onClick={() => setIsStudent((s) => !s)} />
           <span
             className={cn(
               isStudent
                 ? "bg-neutral-500/10"
-                : "bg-yellow-500 dark:text-neutral-900",
-              "p-2 rounded-xl"
+                : "bg-[#fec748] dark:text-neutral-900",
+              "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
             )}
           >
             {lang.im_a_teacher}
@@ -158,11 +163,15 @@ const FormDemo = ({ language }: { language: string }) => {
               className="cursor-pointer text-white rounded-xl transition-colors duration-300 ease-in-out"
               onClick={handleSubmit(onSubmit)}
             >
-              {lang.submit}
+              {loading ? (
+                <div id="loading" className="w-8 h-8"></div>
+              ) : (
+                <div>{err == "" ? "Giriş Başarılı!" : lang.submit}</div>
+              )}
             </Button>
           </Form.Submit>
           {err && (
-            <div className="absolute -top-4 text-red-500 text-right">{err}</div>
+            <div className="absolute top-8 text-red-500 text-right">{err}</div>
           )}
         </div>
       </div>

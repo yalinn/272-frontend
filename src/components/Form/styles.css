@@ -96,3 +96,20 @@ button {
 .Button:focus {
     box-shadow: 0 0 0 2px black;
 }
+
+#loading {
+    border: 2px solid transparent;
+    border-top: 4px solid rgb(253 224 71);
+    border-radius: 100%;
+    animation: spin 1s infinite ease-out;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Roboto } from "next/font/google";
-
-const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const metadata: Metadata = {
   title: "ProBee Çankaya Portalı",
@@ -21,8 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={params.lang}>
-      <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-[#09090b]">
+      <body>
+        <main className="flex font-bold min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-[#09090b]">
           {children}
         </main>
       </body>
