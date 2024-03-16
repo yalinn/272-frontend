@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <main className="flex font-bold min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-[#1c1c1c]">
+        <main className="flex font-bold min-h-screen flex-col items-center justify-center bg-zinc-100 dark:bg-[#09090b]">
           {children}
         </main>
       </body>
