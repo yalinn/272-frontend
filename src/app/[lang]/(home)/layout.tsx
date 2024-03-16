@@ -19,6 +19,8 @@ import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
 import Link from "next/link";
+import LogoSVG from "@/assets/svg/logo";
+import BeeIcon from "@/assets/svg/bee";
 
 export default async function RootLayout({
   children,
@@ -56,9 +58,12 @@ async function NavBar({ lang }: { lang: LangType }) {
         "border-b border-gray-300/30"
       )}
     >
-      <Link className="flex items-center" href="/">
-        <HiveIcon className="w-8" />
-        <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
+      <Link
+        className="flex items-center cursor-default selection:bg-transparent"
+        href="/"
+      >
+        <BeeIcon height={30} fill={"#F9E700"} />
+        <h1 className={cn("text-2xl font-bold text-[#F9E700]", "ml-2")}>
           Probee
         </h1>
       </Link>
@@ -68,7 +73,7 @@ async function NavBar({ lang }: { lang: LangType }) {
           className={cn(
             "text-xl font-semibold text-neutral-300",
             "hover:text-neutral-100",
-            "flex items-center cursor-pointer"
+            "flex items-center cursor-pointer selection:bg-transparent"
           )}
         >
           {lang.sign_out}

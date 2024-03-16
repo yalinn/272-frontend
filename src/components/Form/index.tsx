@@ -95,11 +95,11 @@ const FormDemo = ({ language }: { language: string }) => {
   return (
     <Form.Root className="grid gap-4 py-4">
       <div className="grid grid-cols-4 items-center gap-4">
-        <div className="flex dark:text-neutral-300 items-center col-span-3 space-x-2">
+        <div className="flex dark:text-neutral-300 items-center col-span-4 space-x-2 w-full justify-center">
           <span
             className={cn(
               isStudent
-                ? "bg-[#fec748] dark:text-neutral-900"
+                ? "bg-[#F9E700] dark:text-neutral-900"
                 : "dark:text-neutral-300 bg-neutral-500/10",
               "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
             )}
@@ -111,7 +111,7 @@ const FormDemo = ({ language }: { language: string }) => {
             className={cn(
               isStudent
                 ? "bg-neutral-500/10"
-                : "bg-[#fec748] dark:text-neutral-900",
+                : "bg-[#F9E700] dark:text-neutral-900",
               "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
             )}
           >
@@ -126,7 +126,7 @@ const FormDemo = ({ language }: { language: string }) => {
           key={input.id}
           typeof={input.type || "text"}
         >
-          <Form.Label className="text-right text-[#fec748] w-full text-xs md:text-sm">
+          <Form.Label className="text-right text-[#F9E700] w-full text-xs md:text-sm">
             {input.label}
           </Form.Label>
           <div className="flex flex-col col-span-3 h-full justify-center relative">
@@ -159,7 +159,7 @@ const FormDemo = ({ language }: { language: string }) => {
           <Form.Submit className="w-full text-black rounded-md p-2" asChild>
             <Button
               type="submit"
-              variant={"honey"}
+              variant={"bee"}
               className="cursor-pointer rounded-xl transition-colors duration-300 ease-in-out"
               onClick={handleSubmit(onSubmit)}
             >
