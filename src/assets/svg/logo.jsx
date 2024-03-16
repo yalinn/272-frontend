@@ -1,6 +1,6 @@
 export default function LogoSVG({ ...props }) {
   return (
-    <svg viewBox="0 0 173 173" enable-background="new 0 0 173 173" {...props}>
+    <svg viewBox="0 0 173 173" enableBackground="new 0 0 173 173" {...props}>
       <path
         fill="#F8E700"
         opacity="1.000000"
