@@ -43,7 +43,7 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body className={cn(inter.className)}>
-        <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#09090b] bg-[#fbfbfd]">
+        <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#1c1c1c] bg-[#fbfbfd]">
           <NavBar lang={lang} locale={params.lang} />
           {children}
         </main>
