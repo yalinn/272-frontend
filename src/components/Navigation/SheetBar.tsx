@@ -21,6 +21,10 @@ export default function SheetBar({
   locale: string;
 }) {
   const [open, setOpen] = useState(false);
+  const navigate = (path: string) => {
+    setOpen(false);
+    window.location.href = path;
+  };
   return (
     <Sheet key={"left"} open={open} onOpenChange={setOpen}>
       <SheetTrigger>
@@ -42,18 +46,20 @@ export default function SheetBar({
             </div>
           </SheetTitle>
         </SheetHeader>
-        <div className="flex lg:justify-end">
+        <div className="flex lg:justify-end w-full">
           <div className="flex flex-col gap-4 mt-4 lg:text-left lg:items-end w-full">
-            <Link href={"/" + locale}>
-              <div className="hover:text-[#fec748] transition-colors duration-300 ease-in-out">
-                {lang.route_home}
-              </div>
-            </Link>
-            <Link href="/submits">
-              <div className="hover:text-[#fec748] transition-colors duration-300 ease-in-out">
-                {lang.route_submits}
-              </div>
-            </Link>
+            <div
+              onClick={() => navigate("/")}
+              className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
+            >
+              {lang.route_home}
+            </div>
+            <div
+              onClick={() => navigate("/submits")}
+              className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
+            >
+              {lang.route_submits}
+            </div>
           </div>
         </div>
       </SheetContent>
