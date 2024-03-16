@@ -5,6 +5,7 @@ import "./styles.css";
 
 const langs = {
   en: {
+    success_login: "Login successful!",
     title: "Edit your profile",
     desctiption:
       "Make changes to your profile here. Click save when you're done.",
@@ -31,6 +32,7 @@ const langs = {
     ],
   },
   tr: {
+    success_login: "Giriş Başarılı!",
     title: "Profilinizi düzenleyin",
     desctiption:
       "Profilinizi buradan düzenleyin. Bittiğinizde kaydet'e tıklayın.",
@@ -170,7 +172,7 @@ const FormDemo = ({ language }: { language: string }) => {
               {loading ? (
                 <div id="loading" className="w-8 h-8"></div>
               ) : (
-                <div>{err == "" ? "Giriş Başarılı!" : lang.submit}</div>
+                <div>{err == "" ? lang.success_login : lang.submit}</div>
               )}
             </Button>
           </Form.Submit>
