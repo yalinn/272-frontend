@@ -72,6 +72,7 @@ const FormDemo = ({ language }: { language: string }) => {
   const [isStudent, setIsStudent] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
   const onSubmit: SubmitHandler<any> = async (data) => {
+    if (loading || err == "") return;
     setLoading(true);
     data.user_type = isStudent ? "student" : "teacher";
     const res = await fetch(`/api/auth`, {
@@ -160,7 +161,10 @@ const FormDemo = ({ language }: { language: string }) => {
             <Button
               type="submit"
               variant={"honey"}
-              className="cursor-pointer rounded-xl transition-colors duration-300 ease-in-out"
+              className={cn(
+                loading || err == "" ? "cursor-not-allowed" : "cursor-pointer",
+                "rounded-xl transition-colors duration-300 ease-in-out"
+              )}
               onClick={handleSubmit(onSubmit)}
             >
               {loading ? (
