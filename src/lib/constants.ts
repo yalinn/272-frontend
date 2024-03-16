@@ -1,4 +1,3 @@
-
 import OPT from "@/config";
 export const NodeEnv = process.env.NODE_ENV as "development" | "production";
 export const DOMAIN = {
@@ -16,7 +15,7 @@ export const SOCKET_URL = {
   production: OPT.WS_ENDPOINT,
 }[NodeEnv];
 
-import type { SessionOptions } from 'iron-session';
+import type { SessionOptions } from "iron-session";
 // https://github.com/vvo/iron-session?tab=readme-ov-file#session-options
 export const sessionOptions: SessionOptions = {
   password: process.env.IRON_SESSION_PASSWORD as string,
