@@ -13,7 +13,6 @@ export default function NavBar({
     <nav
       className={cn(
         "flex lg:px-64 items-center justify-between w-full p-8",
-        "dark:bg-[#09090b] bg-[#fbfbfd]",
         "border-b border-gray-300/30"
       )}
     >

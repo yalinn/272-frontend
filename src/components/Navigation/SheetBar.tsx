@@ -38,7 +38,7 @@ export default function SheetBar({
       <SheetContent side={"left"}>
         <SheetHeader>
           <SheetTitle>
-            <div className="flex cursor-pointer selection:bg-transparent">
+            <div className="flex cursor-pointer justify-center selection:bg-transparent">
               <HiveIcon className="w-8" />
               <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
                 Probee
