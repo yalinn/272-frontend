@@ -1,16 +1,14 @@
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/lib/ui/sheet";
 import { LangType } from "@/lang";
 import { cn } from "@/lib/utils";
-import HiveIcon from "@/assets/svg/HiveIcon";
 import Link from "next/link";
-export default async function NavBar({ lang }: { lang: LangType }) {
+import SheetBar from "./SheetBar";
+export default function NavBar({
+  lang,
+  locale,
+}: {
+  lang: LangType;
+  locale: string;
+}) {
   return (
     <nav
       className={cn(
@@ -20,44 +18,7 @@ export default async function NavBar({ lang }: { lang: LangType }) {
       )}
     >
       <div className="flex">
-        <Sheet key={"left"}>
-          <SheetTrigger>
-            <div className="flex items-center cursor-pointer selection:bg-transparent">
-              <HiveIcon className="w-8" />
-              <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
-                Probee
-              </h1>
-            </div>
-          </SheetTrigger>
-          <SheetContent side={"left"}>
-            <SheetHeader>
-              <SheetTitle>
-                <div className="flex cursor-pointer selection:bg-transparent">
-                  <HiveIcon className="w-8" />
-                  <h1
-                    className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}
-                  >
-                    Probee
-                  </h1>
-                </div>
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex lg:justify-end">
-              <div className="flex flex-col gap-4 mt-4 lg:text-left lg:items-end w-full">
-                <Link href="/">
-                  <div className="hover:text-[#fec748] transition-colors duration-300 ease-in-out">
-                    {lang.route_home}
-                  </div>
-                </Link>
-                <Link href="/submits">
-                  <div className="hover:text-[#fec748] transition-colors duration-300 ease-in-out">
-                    {lang.route_submits}
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+        <SheetBar lang={lang} locale={locale} />
         {/* <Link
             className="flex items-center cursor-default selection:bg-transparent"
             href="/"
