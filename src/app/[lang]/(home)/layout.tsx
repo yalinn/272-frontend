@@ -1,12 +1,5 @@
-import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
-
-export const metadata: Metadata = {
-  title: "ProBee Çankaya Portalı",
-  description: "Seng272 Proje Ödevi",
-};
-
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "tr" }];
 }
@@ -19,9 +12,20 @@ import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
 import Link from "next/link";
-import LogoSVG from "@/assets/svg/logo";
-import BeeIcon from "@/assets/svg/bee";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}) {
+  return {
+    title: params.lang === "en" ? "Probee Application" : "Probee Uygulaması",
+    description:
+      params.lang === "en"
+        ? "Çankaya University Probee Application"
+        : "Çankaya Üniversitesi Probee Uygulaması",
+  };
+}
 export default async function RootLayout({
   children,
   params,

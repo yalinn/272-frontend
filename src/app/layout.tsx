@@ -9,9 +9,6 @@ export const metadata: Metadata = {
   description: "Seng272 Proje Ödevi",
 };
 
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "tr" }];
-}
 export default function RootLayout({
   children,
   params,

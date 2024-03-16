@@ -1,14 +1,5 @@
-import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "ProBee Çankaya Portalı",
-  description: "Seng272 Proje Ödevi",
-};
-
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "tr" }];
-}
 export default function RootLayout({
   children,
   params,
@@ -25,4 +16,16 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}) {
+  return {
+    title: params.lang === "en" ? "Sign in to Probee" : "Probee'ye Giriş Yapın",
+    description:
+      params.lang === "en" ? "Project for Seng272" : "Seng272 Proje Ödevi",
+  };
 }

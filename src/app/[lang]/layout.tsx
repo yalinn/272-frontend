@@ -1,10 +1,4 @@
-import type { Metadata } from "next";
 import "./globals.css";
-
-export const metadata: Metadata = {
-  title: "ProBee Çankaya Portalı",
-  description: "Seng272 Proje Ödevi",
-};
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "tr" }];
