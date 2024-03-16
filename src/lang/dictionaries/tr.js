@@ -1,4 +1,4 @@
-export default {
+const tr = {
     sign_in: "Giriş",
     sign_out: "Çıkış",
     im_student: "Öğrenciyim",
@@ -7,3 +7,5 @@ export default {
     password: "Parola",
     submit: "Giriş Yap",
 };
+
+export default tr;

@@ -1,4 +1,4 @@
-export default {
+const en = {
     sign_in: "Sign In",
     sign_out: "Sign Out",
     im_student: "I'm a student",
@@ -7,3 +7,5 @@ export default {
     password: "Password",
     submit: "Log In",
 };
+
+export default en;
