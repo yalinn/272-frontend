@@ -62,8 +62,8 @@ async function NavBar({ lang }: { lang: LangType }) {
         className="flex items-center cursor-default selection:bg-transparent"
         href="/"
       >
-        <BeeIcon height={30} fill={"#F9E700"} />
-        <h1 className={cn("text-2xl font-bold text-[#F9E700]", "ml-2")}>
+        <HiveIcon className="w-8" />
+        <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
           Probee
         </h1>
       </Link>

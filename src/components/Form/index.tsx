@@ -99,7 +99,7 @@ const FormDemo = ({ language }: { language: string }) => {
           <span
             className={cn(
               isStudent
-                ? "bg-[#F9E700] dark:text-neutral-900"
+                ? "bg-[#fec748] dark:text-neutral-900"
                 : "dark:text-neutral-300 bg-neutral-500/10",
               "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
             )}
@@ -111,7 +111,7 @@ const FormDemo = ({ language }: { language: string }) => {
             className={cn(
               isStudent
                 ? "bg-neutral-500/10"
-                : "bg-[#F9E700] dark:text-neutral-900",
+                : "bg-[#fec748] dark:text-neutral-900",
               "p-2 rounded-xl transition-colors duration-300 ease-in-out font-light text-sm"
             )}
           >
@@ -126,7 +126,7 @@ const FormDemo = ({ language }: { language: string }) => {
           key={input.id}
           typeof={input.type || "text"}
         >
-          <Form.Label className="text-right text-[#F9E700] w-full text-xs md:text-sm">
+          <Form.Label className="text-right text-[#fec748] w-full text-xs md:text-sm">
             {input.label}
           </Form.Label>
           <div className="flex flex-col col-span-3 h-full justify-center relative">
@@ -159,7 +159,7 @@ const FormDemo = ({ language }: { language: string }) => {
           <Form.Submit className="w-full text-black rounded-md p-2" asChild>
             <Button
               type="submit"
-              variant={"bee"}
+              variant={"honey"}
               className="cursor-pointer rounded-xl transition-colors duration-300 ease-in-out"
               onClick={handleSubmit(onSubmit)}
             >
