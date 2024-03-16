@@ -6,6 +6,10 @@ const en = {
     username: "Username",
     password: "Password",
     submit: "Log In",
+    route_home: "Home",
+    route_about: "About",
+    route_contact: "Contact",
+    route_submits: "Submits",
 };
 
 export default en;

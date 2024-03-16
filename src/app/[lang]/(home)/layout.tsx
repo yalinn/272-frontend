@@ -5,13 +5,12 @@ export async function generateStaticParams() {
 }
 
 import { cn } from "@/lib/utils";
-import HiveIcon from "@/assets/svg/HiveIcon";
-import getDictionary, { LangType } from "@/lang";
+import getDictionary from "@/lang";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
-import Link from "next/link";
+import NavBar from "@/components/Navigation";
 
 export async function generateMetadata({
   params,
@@ -50,39 +49,5 @@ export default async function RootLayout({
         </main>
       </body>
     </html>
-  );
-}
-
-async function NavBar({ lang }: { lang: LangType }) {
-  return (
-    <nav
-      className={cn(
-        "flex lg:px-64 items-center justify-between w-full p-8",
-        "dark:bg-[#09090b] bg-[#fbfbfd]",
-        "border-b border-gray-300/30"
-      )}
-    >
-      <Link
-        className="flex items-center cursor-default selection:bg-transparent"
-        href="/"
-      >
-        <HiveIcon className="w-8" />
-        <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
-          Probee
-        </h1>
-      </Link>
-
-      <Link href="/api/logout" title="Sign out">
-        <div
-          className={cn(
-            "text-xl font-semibold text-neutral-300",
-            "hover:text-neutral-100",
-            "flex items-center cursor-pointer selection:bg-transparent"
-          )}
-        >
-          {lang.sign_out}
-        </div>
-      </Link>
-    </nav>
   );
 }

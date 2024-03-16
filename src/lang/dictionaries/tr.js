@@ -6,6 +6,10 @@ const tr = {
     username: "Kullanıcı Adı",
     password: "Parola",
     submit: "Giriş Yap",
+    route_home: "Ana Sayfa",
+    route_about: "Hakkında",
+    route_contact: "İletişim",
+    route_submits: "Talepler",
 };
 
 export default tr;
