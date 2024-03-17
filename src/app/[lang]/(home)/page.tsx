@@ -25,7 +25,7 @@ export default function Home({ params }: { params: { lang: string } }) {
         </div>
         <div className="flex flex-col w-full gap-2 mt-10 overflow-visible overscroll-y-auto">
           {data.map(
-            (suggestion: any) =>
+            (suggestion: any, i: number) =>
               (suggestion && (
                 <ProjectCard
                   key={suggestion.id}
@@ -34,7 +34,7 @@ export default function Home({ params }: { params: { lang: string } }) {
                   href="#"
                   stars={1.3}
                 />
-              )) || <Loading />
+              )) || <Loading key={i} />
           )}
         </div>
       </div>
