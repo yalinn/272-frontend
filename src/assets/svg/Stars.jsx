@@ -1,5 +1,5 @@
 export default function Stars({ fill, point, size, max }) {
-  if (!fill) fill = "#fec748";
+  if (!fill) fill = "#fff";
   const stars = [];
   for (let i = 0; i < max; i++) {
     if (i + 0.8 < point.toFixed(1)) {
@@ -20,7 +20,7 @@ export default function Stars({ fill, point, size, max }) {
 export function HalfStar({ fill, size }) {
   return (
     <svg
-      fill={fill || "#fec748"}
+      fill={fill || "#fff"}
       width={size || "16px"}
       height={size || "16px"}
       viewBox="0 0 36.092 36.092"
@@ -37,7 +37,7 @@ export function HalfStar({ fill, size }) {
 export function EmptyStar({ fill, size }) {
   return (
     <svg
-      fill={fill || "#fec748"}
+      fill={fill || "#fff"}
       width={size || "16px"}
       height={size || "16px"}
       viewBox="0 0 36.09 36.09"
@@ -54,7 +54,7 @@ export function EmptyStar({ fill, size }) {
 export function FilledStar({ fill, size }) {
   return (
     <svg
-      fill={fill || "#fec748"}
+      fill={fill || "#fff"}
       width={size || "16px"}
       height={size || "16px"}
       viewBox="0 0 35.088 35.088"

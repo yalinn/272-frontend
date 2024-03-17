@@ -32,7 +32,8 @@ export default function Home({ params }: { params: { lang: string } }) {
                   title={suggestion.title}
                   description={suggestion.content}
                   href="#"
-                  stars={1.3}
+                  stars={suggestion.stars}
+                  date={suggestion.date}
                 />
               )) || <Loading key={i} />
           )}
@@ -47,14 +48,14 @@ function Loading({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className="p-4 min-h-40 border-gray-200 rounded-xl border-2 relative animate-pulse">
-      <p className="text-lg bg-gray-200/80 rounded-xl font-semibold max-w-40 md:max-w-80 animate-pulse h-6"></p>
-      <p className="mt-4 bg-gray-200/50 h-6 rounded-xl max-w-44 md:max-w-96 animate-pulse"></p>
+    <div className="p-4 min-h-64 lg:min-h-40 border-gray-200 rounded-xl border-2 relative animate-pulse">
+      <p className="text-lg bg-gray-200/80 rounded-xl font-semibold max-w-20 md:max-w-80 animate-pulse h-6"></p>
+      <p className="mt-4 bg-gray-200/50 h-6 rounded-xl max-w-32 md:max-w-96 animate-pulse"></p>
       <div className="mt-4 bg-blue-600 hover:underline absolute bottom-7 right-4 text-right w-20 text-sm h-4 rounded-xl"></div>
       <span className="absolute top-4 right-4 flex flex-col justify-end ">
         <div className="flex flex-col justify-end gap-2">
           <span className="text-xs w-full text-end">
-            <Stars max={5} point={0} size={16} fill={"#fec748"} />
+            <Stars max={5} point={0} size={16} fill={"#fff"} />
             <div className="flex mt-3 items-center justify-end  ">
               <span className="text-xs rounded-xl bg-gray-600 h-3 w-10 text-end"></span>
             </div>
@@ -63,6 +64,10 @@ function Loading({
         <div className="flex mt-1 items-center justify-end  ">
           <span className="text-xs rounded-xl bg-gray-600 h-3 w-full text-end"></span>
         </div>
+      </span>
+      <span className="absolute bottom-5 left-4 flex flex-col justify-end">
+        <span className="text-xs rounded-xl bg-gray-600 w-32 h-3 text-end">
+        </span>
       </span>
     </div>
   );
@@ -74,17 +79,26 @@ function ProjectCard({
   href,
   stars,
   upvotes,
+  date,
 }: {
   title: string;
   description: string;
   href: string;
   stars?: number;
   upvotes?: number;
+  date?: string;
 }) {
+  const time = new Date(date || "")
+    .toTimeString()
+    .split(":")
+    .slice(0, 2)
+    .join(":");
+  date = new Date(date || "").toLocaleDateString();
+  console.log({ date, time });
   return (
-    <div className="p-4 min-h-40 border-gray-200 rounded-xl border-2 relative">
+    <div className="p-4 min-h-64 lg:min-h-40 border-gray-200 rounded-xl border-2 relative">
       <p className="text-lg font-semibold max-w-40 md:max-w-80">{title}</p>
-      <p className="mt-2  max-h-30 text-gray-600 max-w-44 md:max-w-96 lg:max-w-[36rem]">
+      <p className="mt-2 max-h-36 text-gray-600 max-w-44 md:max-w-96 lg:max-w-[36rem]">
         {description.slice(0, 60) + (description.length > 60 ? "..." : "")}
       </p>
       <a
@@ -95,7 +109,7 @@ function ProjectCard({
       </a>
       <span className="absolute top-4 right-4 flex flex-col justify-end">
         <div className="flex flex-col justify-end gap-2">
-          <Stars max={5} point={stars} size={16} fill={"#fec748"} />
+          <Stars max={5} point={stars} size={16} fill={"#fff"} />
           <span className="text-xs text-gray-600 w-full text-end">
             {stars} stars
           </span>
@@ -105,6 +119,11 @@ function ProjectCard({
             {upvotes || 0} upvotes
           </span>
         </div>
+      </span>
+      <span className="absolute bottom-4 left-4 flex flex-col justify-end">
+        <span className="text-xs text-gray-600 w-full text-end">
+          {date} {time}
+        </span>
       </span>
     </div>
   );
