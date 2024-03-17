@@ -4,10 +4,10 @@ import Link from "next/link";
 import SheetBar from "./SheetBar";
 export default function NavBar({
   lang,
-  locale,
+  paths,
 }: {
   lang: LangType;
-  locale: string;
+  paths: { route: string; name: string }[];
 }) {
   return (
     <nav
@@ -17,7 +17,10 @@ export default function NavBar({
       )}
     >
       <div className="flex">
-        <SheetBar lang={lang} locale={locale} />
+        <SheetBar
+          lang={lang}
+          paths={paths}
+        />
         {/* <Link
             className="flex items-center cursor-default selection:bg-transparent"
             href="/"

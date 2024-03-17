@@ -36,57 +36,12 @@ import {
   TableRow,
 } from "@/lib/ui/table";
 
-const data: Suggestion[] = [
-  {
-    id: "m5gr84i9",
-    stars: 2.1,
-    status: "success",
-    topic: "frontend",
-    detail: "Build a table menu",
-  },
-  {
-    id: "3u1reuv4",
-    stars: 1.8,
-    status: "success",
-    topic: "backend",
-    detail: "Integrate with the redis database",
-  },
-  {
-    id: "derv1ws0",
-    stars: 2.5,
-    status: "processing",
-    topic: "backend",
-    detail: "Rebuild the backend with Rust (:D)",
-  },
-  {
-    id: "derv1ws1",
-    stars: 2.5,
-    status: "processing",
-    topic: "backend",
-    detail: "Complete the Suggetion feature",
-  },
-  {
-    id: "5kma53ae",
-    stars: 3.7,
-    status: "success",
-    topic: "frontend",
-    detail: "Insert aprove & reject suggetion feature",
-  },
-  {
-    id: "bhqecj4p",
-    stars: 4.6,
-    status: "rejected",
-    topic: "websocket",
-    detail: "Create a websocket server",
-  },
-];
-
 export type Suggestion = {
   id: string;
   stars: number;
   status: "pending" | "processing" | "success" | "rejected";
-  topic: string;
-  detail: string;
+  title: string;
+  content: string;
 };
 
 export const columns: ColumnDef<Suggestion>[] = [
@@ -122,7 +77,7 @@ export const columns: ColumnDef<Suggestion>[] = [
     ),
   },
   {
-    accessorKey: "topic",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
@@ -130,15 +85,15 @@ export const columns: ColumnDef<Suggestion>[] = [
           className="justify-start p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Topic
+          Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("topic")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("title")}</div>,
   },
   {
-    accessorKey: "detail",
+    accessorKey: "content",
     header: ({ column }) => {
       return (
         <Button
@@ -146,13 +101,13 @@ export const columns: ColumnDef<Suggestion>[] = [
           className="justify-start p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Detail
+          Content
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("detail")}</div>
+      <div className="lowercase">{row.getValue("content")}</div>
     ),
   },
   {
@@ -207,7 +162,7 @@ export const columns: ColumnDef<Suggestion>[] = [
   },
 ];
 
-export function DataTable() {
+export function DataTable({ data }: { data: Suggestion[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -239,10 +194,10 @@ export function DataTable() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter topics..."
-          value={(table.getColumn("topic")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter titles..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("topic")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm rounded-xl"
         />

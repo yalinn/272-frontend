@@ -2,7 +2,6 @@ import { type NextRequest } from "next/server";
 import { API_URL, sessionOptions } from "@/lib/constants";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
-import { error } from "console";
 
 export async function POST(request: NextRequest) {
   const session = await getIronSession(cookies(), sessionOptions);
@@ -10,7 +9,9 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const data = await fetch(API_URL + "/session", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(body),
     })
       .catch((e) => {
@@ -27,6 +28,8 @@ export async function POST(request: NextRequest) {
     } else {
       /* @ts-ignore */
       session.token = data.token;
+      /* @ts-ignore */
+      session.user = data.user;
       await session.save();
       return Response.json(data, { status: 200 });
     }

@@ -15,10 +15,10 @@ import { LangType } from "../../lang";
 
 export default function SheetBar({
   lang,
-  locale,
+  paths,
 }: {
   lang: LangType;
-  locale: string;
+  paths: { route: string; name: string }[];
 }) {
   const [open, setOpen] = useState(false);
   const navigate = (path: string) => {
@@ -48,18 +48,14 @@ export default function SheetBar({
         </SheetHeader>
         <div className="flex lg:justify-end w-full">
           <div className="flex flex-col gap-4 mt-4 lg:text-left lg:items-end w-full">
-            <div
-              onClick={() => navigate("/")}
-              className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
-            >
-              {lang.route_home}
-            </div>
-            <div
-              onClick={() => navigate("/submits")}
-              className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
-            >
-              {lang.route_submits}
-            </div>
+            {paths.map((path) => (
+              <div
+                onClick={() => navigate(path.route)}
+                className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
+              >
+                {path.name}
+              </div>
+            ))}
           </div>
         </div>
       </SheetContent>

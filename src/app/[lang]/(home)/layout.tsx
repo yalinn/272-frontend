@@ -33,18 +33,22 @@ export default async function RootLayout({
   params: { lang: string };
 }>) {
   const lang = await getDictionary(params.lang);
-  const session = await getIronSession<{ token: any }>(
-    cookies(),
-    sessionOptions
-  );
+  const session = await getIronSession<{
+    token: any;
+    user: { roles: string[] };
+  }>(cookies(), sessionOptions);
   if (!session.token) {
     redirect("/sign-in", RedirectType.push);
+  }
+  const paths = [{ route: "/", name: lang.route_home }];
+  if (session.user.roles.includes("admin")) {
+    paths.push({ route: "/suggestions", name: lang.route_suggestions });
   }
   return (
     <html lang={params.lang}>
       <body className={cn(inter.className)}>
         <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#09090b] bg-[#fbfbfd]">
-          <NavBar lang={lang} locale={params.lang} />
+          <NavBar lang={lang} paths={paths} />
           {children}
         </main>
       </body>

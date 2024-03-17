@@ -9,7 +9,7 @@ const tr = {
     route_home: "Ana Sayfa",
     route_about: "Hakkında",
     route_contact: "İletişim",
-    route_submits: "Talepler",
+    route_suggestions: "Talepler",
 };
 
 export default tr;

@@ -9,7 +9,7 @@ const en = {
     route_home: "Home",
     route_about: "About",
     route_contact: "Contact",
-    route_submits: "Submits",
+    route_suggestions: "Submits",
 };
 
 export default en;
