@@ -41,6 +41,9 @@ export default async function RootLayout({
     redirect("/sign-in", RedirectType.push);
   }
   const paths = [{ route: "/", name: lang.route_home }];
+  if (!session.user) {
+    redirect("/api/logout", RedirectType.push);
+  }
   if (session.user.roles.includes("admin")) {
     paths.push({ route: "/suggestions", name: lang.route_suggestions });
   }
