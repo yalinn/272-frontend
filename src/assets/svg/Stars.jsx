@@ -1,17 +1,52 @@
-export default function Stars({ fill, point, size, max }) {
+import { useEffect, useState } from "react";
+
+export default function Stars({
+  fill,
+  point,
+  size,
+  max,
+  voted,
+  setVoted,
+  voteSuggestion,
+}) {
+  const [vote, setVote] = useState(null);
   if (!fill) fill = "#fff";
   const stars = [];
   for (let i = 0; i < max; i++) {
-    if (i + 0.8 < point.toFixed(1)) {
+    if (voted) {
+      if (i < voted) {
+        stars.push(<FilledStar fill={"#fec748"} size={size} />);
+      } else stars.push(<EmptyStar fill={"#fec748"} size={size} />);
+    } else if (vote !== null) {
+      if (i <= vote) {
+        stars.push(<FilledStar fill={"#fec748"} size={size} />);
+      } else stars.push(<EmptyStar fill={"#fec748"} size={size} />);
+    } else if (i + 0.8 < point.toFixed(1)) {
       stars.push(<FilledStar fill={fill} size={size} />);
     } else if (point.toFixed(1) - i > 0.3) {
       stars.push(<HalfStar fill={fill} size={size} />);
     } else stars.push(<EmptyStar fill={fill} size={size} />);
   }
+  function handleEnter(index) {
+    setVote(index);
+  }
+  function handleLeave(index) {
+    setVote(null);
+  }
   return (
     <div className="flex">
       {stars.map((star, index) => (
-        <span key={index}>{star}</span>
+        <div
+          key={index}
+          onPointerEnter={() => handleEnter(index)}
+          onPointerLeave={() => handleLeave(index)}
+          onClick={() => {
+            if (vote) voteSuggestion(vote + 1);
+          }}
+          className="pointer-events-auto"
+        >
+          {star}
+        </div>
       ))}
     </div>
   );
@@ -34,13 +69,15 @@ export function HalfStar({ fill, size }) {
   );
 }
 
-export function EmptyStar({ fill, size }) {
+export function EmptyStar({ fill, size, ...props }) {
   return (
     <svg
       fill={fill || "#fff"}
       width={size || "16px"}
       height={size || "16px"}
       viewBox="0 0 36.09 36.09"
+      strokeWidth={1.5}
+      {...props}
     >
       <g>
         <g>

@@ -28,12 +28,15 @@ export default function Home({ params }: { params: { lang: string } }) {
             (suggestion: any, i: number) =>
               (suggestion && (
                 <ProjectCard
+                  id={suggestion.id}
                   key={suggestion.id}
                   title={suggestion.title}
                   description={suggestion.content}
                   href="#"
                   stars={suggestion.stars}
                   date={suggestion.date}
+                  upvotes={suggestion.upvotes}
+                  vote={suggestion.vote || 0}
                 />
               )) || <Loading key={i} />
           )}
@@ -55,7 +58,15 @@ function Loading({
       <span className="absolute top-4 right-4 flex flex-col justify-end ">
         <div className="flex flex-col justify-end gap-2">
           <span className="text-xs w-full text-end">
-            <Stars max={5} point={0} size={16} fill={"#fff"} />
+            <Stars
+              max={5}
+              point={0}
+              size={16}
+              fill={"#fff"}
+              voted={0}
+              setVoted={() => {}}
+              voteSuggestion={() => {}}
+            />
             <div className="flex mt-3 items-center justify-end  ">
               <span className="text-xs rounded-xl bg-gray-600 h-3 w-10 text-end"></span>
             </div>
@@ -66,35 +77,48 @@ function Loading({
         </div>
       </span>
       <span className="absolute bottom-5 left-4 flex flex-col justify-end">
-        <span className="text-xs rounded-xl bg-gray-600 w-32 h-3 text-end">
-        </span>
+        <span className="text-xs rounded-xl bg-gray-600 w-32 h-3 text-end"></span>
       </span>
     </div>
   );
 }
 
 function ProjectCard({
+  id: id,
   title,
   description,
   href,
   stars,
   upvotes,
   date,
+  vote,
 }: {
+  id: string;
   title: string;
   description: string;
   href: string;
   stars?: number;
   upvotes?: number;
   date?: string;
+  vote: number;
 }) {
+  const [voted, setVoted] = useState(vote);
   const time = new Date(date || "")
     .toTimeString()
     .split(":")
     .slice(0, 2)
     .join(":");
   date = new Date(date || "").toLocaleDateString();
-  console.log({ date, time });
+  function voteSuggestion(v: number) {
+    fetch("/api/suggestions", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ star: v, id: id }),
+    });
+    setVoted(v);
+  }
   return (
     <div className="p-4 min-h-64 lg:min-h-40 border-gray-200 rounded-xl border-2 relative">
       <p className="text-lg font-semibold max-w-40 md:max-w-80">{title}</p>
@@ -109,7 +133,15 @@ function ProjectCard({
       </a>
       <span className="absolute top-4 right-4 flex flex-col justify-end">
         <div className="flex flex-col justify-end gap-2">
-          <Stars max={5} point={stars} size={16} fill={"#fff"} />
+          <Stars
+            max={5}
+            point={stars}
+            size={16}
+            fill={"#fff"}
+            voted={voted}
+            setVoted={setVoted}
+            voteSuggestion={voteSuggestion}
+          />
           <span className="text-xs text-gray-600 w-full text-end">
             {stars} stars
           </span>

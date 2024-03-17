@@ -52,3 +52,35 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
+
+export async function PUT(request: NextRequest) {
+  const session = await getIronSession(cookies(), sessionOptions);
+  try {
+    const body = await request.json();
+    const data = await fetch(API_URL + "/suggestions/" + body.id + "/star", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        /* @ts-ignore */
+        Authorization: `Bearer ${session.token}`,
+      },
+      body: JSON.stringify({ star: body.star }),
+    })
+      .catch((e) => {
+        return Response.json(
+          { message: "Something went wrong", error: e.message, status: 500 },
+          { status: 500 }
+        );
+      })
+      .then((res) => {
+        return res.json();
+      });
+    if (data.error) {
+      return Response.json(data, { status: data.status });
+    } else {
+      return Response.json(data, { status: 200 });
+    }
+  } catch (error) {
+    return Response.json({ error: "Something went wrong" }, { status: 500 });
+  }
+}
