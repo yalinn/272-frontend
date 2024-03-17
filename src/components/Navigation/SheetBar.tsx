@@ -50,6 +50,7 @@ export default function SheetBar({
           <div className="flex flex-col gap-4 mt-4 lg:text-left lg:items-end w-full">
             {paths.map((path) => (
               <div
+                key={"link" + path.name}
                 onClick={() => navigate(path.route)}
                 className="cursor-pointer hover:text-[#fec748] transition-colors duration-300 ease-in-out"
               >
