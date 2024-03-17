@@ -40,12 +40,12 @@ export default async function RootLayout({
   if (!session.token) {
     redirect("/sign-in", RedirectType.push);
   }
-  const paths = [{ route: "/", name: lang.route_home }];
+  const paths = [
+    { route: "/", name: lang.route_home },
+    { route: "/suggestions", name: lang.route_suggestions },
+  ];
   if (!session.user) {
     redirect("/api/logout", RedirectType.push);
-  }
-  if (session.user.roles.includes("admin")) {
-    paths.push({ route: "/suggestions", name: lang.route_suggestions });
   }
   return (
     <html lang={params.lang}>

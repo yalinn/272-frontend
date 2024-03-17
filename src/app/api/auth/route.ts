@@ -37,3 +37,39 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
+
+export async function GET(request: NextRequest) {
+  const session = await getIronSession(cookies(), sessionOptions);
+  /* @ts-ignore */
+  if (session.token) {
+    const data = await fetch(API_URL + "/session", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        /* @ts-ignore */
+        Authorization: `Bearer ${session.token}`,
+      },
+    }).then((res) => res.json());
+    return Response.json(data, { status: 200 });
+  } else {
+    return Response.json({ message: "Unauthorized" }, { status: 401 });
+  }
+}
+
+export async function DELETE(request: NextRequest) {
+  const session = await getIronSession(cookies(), sessionOptions);
+  /* @ts-ignore */
+  if (session.token) {
+    const data = await fetch(API_URL + "/session", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        /* @ts-ignore */
+        Authorization: `Bearer ${session.token}`,
+      },
+    }).then((res) => res.json());
+    return Response.json(data, { status: 200 });
+  } else {
+    return Response.json({ message: "Unauthorized" }, { status: 401 });
+  }
+}
