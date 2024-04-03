@@ -42,10 +42,17 @@ export type Suggestion = {
   status: "pending" | "processing" | "success" | "rejected";
   title: string;
   content: string;
+  author: string;
+  upvotes: number;
+  date: string;
+  tags: [];
+  starred: 0;
+  voted: false;
+  department: 0;
 };
 
 export const columns: ColumnDef<Suggestion>[] = [
-  {
+  /* {
     id: "select",
     header: ({ table }) => (
       <Checkbox
@@ -68,7 +75,7 @@ export const columns: ColumnDef<Suggestion>[] = [
     ),
     enableSorting: false,
     enableHiding: false,
-  },
+  }, */
   {
     accessorKey: "status",
     header: "Status",
@@ -136,7 +143,6 @@ export const columns: ColumnDef<Suggestion>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const payment = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -148,13 +154,15 @@ export const columns: ColumnDef<Suggestion>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(payment.author as string)
+              }
             >
-              Copy payment ID
+              Copy suggestor ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Approve Suggestion</DropdownMenuItem>
+            <DropdownMenuItem>Reject Suggestion</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -201,7 +209,7 @@ export function DataTable({ data }: { data: Suggestion[] }) {
           }
           className="max-w-sm rounded-xl"
         />
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto rounded-xl">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
@@ -226,7 +234,7 @@ export function DataTable({ data }: { data: Suggestion[] }) {
                 );
               })}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
       </div>
       <div className="rounded-2xl px-2 py-1 border">
         <Table>
