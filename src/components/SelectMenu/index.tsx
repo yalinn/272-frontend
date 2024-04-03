@@ -8,7 +8,7 @@ import {
 } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 
-export function SelectMenu({
+function SelectMenu({
   filterBy,
   setFilterBy,
 }: {
@@ -112,5 +112,6 @@ const SelectItem = React.forwardRef(
     );
   }
 );
-
+SelectItem.displayName = "SelectItem";
+export { SelectItem };
 export default SelectMenu;
