@@ -250,7 +250,7 @@ import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { departments } from "../../../lib/deps";
 
-export function SelectMenu({
+function SelectMenu({
   by,
   setBy,
   lang,
