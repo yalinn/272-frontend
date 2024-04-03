@@ -75,7 +75,9 @@ export default function Home({ params }: { params: { lang: string } }) {
               </Select.Group>
             </SelectMenu>
           </div>
-          {/* <CreateSuggestions /> */}
+          <SuggestDialog lang={params.lang}>
+            <CreateSuggestions />
+          </SuggestDialog>
         </div>
         <div className="flex flex-col w-full gap-2 overflow-visible overscroll-y-auto">
           {data.map(
@@ -232,10 +234,10 @@ function ProjectCard({
 
 function CreateSuggestions() {
   return (
-    <button className="inline-flex items-center bg-[#fec748] justify-center rounded transition-colors duration-300 ease-in-out hover:bg-[#fec748]/90 px-[15px] text-zinc-900 text-[13px] leading-none h-[35px] gap-[5px] border-white/10 border hover:border-white/40 outline-none">
+    <div className="inline-flex items-center bg-[#fec748] justify-center rounded transition-colors duration-300 ease-in-out hover:bg-[#fec748]/90 px-[15px] text-zinc-900 text-[13px] leading-none h-[35px] gap-[5px] border-white/10 border hover:border-white/40 outline-none">
       <span>+</span>
       <span className="hidden md:block">Suggest</span>
-    </button>
+    </div>
   );
 }
 
@@ -249,6 +251,7 @@ import {
 import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { departments } from "../../../lib/deps";
+import { SuggestDialog } from "../../../components/SuggestDialog";
 
 function SelectMenu({
   by,
