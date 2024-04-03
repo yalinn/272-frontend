@@ -5,7 +5,7 @@ import { Suggestion } from "@/lib/utils";
 export default function Home({ params }: { params: { lang: string } }) {
   const [data, setData] = useState<any>(Array(10).fill(null));
   const [filterBy, setFilterBy] = useState("");
-  const [sortBy, setSortBy] = useState("");
+  const [sortBy, setSortBy] = useState("date");
   async function fetchSuggestions() {
     const data = await fetch("/api/suggestions", {
       method: "GET",
@@ -19,63 +19,63 @@ export default function Home({ params }: { params: { lang: string } }) {
   useEffect(() => {
     fetchSuggestions();
   }, []);
+  useEffect(() => {
+    console.log(filterBy);
+  }, [filterBy]);
   return (
     <div className="container mx-auto py-10">
       <div className="flex flex-col items-center justify-center">
-        <div className="flex justify-between w-full gap-4 items-center mb-4">
-          <div className="flex h-12 gap-4 justify-start w-full items-center">
-            <SelectMenu
-              by={sortBy}
-              setBy={setSortBy}
-              placeholder={params.lang === "tr" ? "Sırala" : "Sort By"}
-              lang={params.lang}
-            >
-              <Select.Group>
-                {[
-                  {
-                    by: "date",
-                    tr: "Tarih",
-                    en: "Date",
-                  },
-                  {
-                    by: "upvotes",
-                    tr: "Oylama",
-                    en: "Upvotes",
-                  },
-                  {
-                    by: "stars",
-                    tr: "Puan",
-                    en: "Stars",
-                  },
-                ].map((filter) => (
-                  <SelectItem value={filter.by} key={filter.by}>
-                    {filter[params.lang == "tr" ? "tr" : "en"]}
+        <div className="flex h-12 gap-4 justify-start w-full mb-4 items-center">
+          <SelectMenu
+            by={sortBy}
+            setBy={setSortBy}
+            placeholder={params.lang === "tr" ? "Sırala" : "Sort By"}
+            lang={params.lang}
+          >
+            <Select.Group>
+              {[
+                {
+                  by: "date",
+                  tr: "Tarih",
+                  en: "Date",
+                },
+                {
+                  by: "upvotes",
+                  tr: "Oylama",
+                  en: "Upvotes",
+                },
+                {
+                  by: "stars",
+                  tr: "Puan",
+                  en: "Stars",
+                },
+              ].map((filter) => (
+                <SelectItem value={filter.by} key={filter.by}>
+                  {filter.tr}
+                </SelectItem>
+              ))}
+            </Select.Group>
+          </SelectMenu>
+          <SelectMenu
+            by={filterBy}
+            setBy={setFilterBy}
+            placeholder={params.lang === "tr" ? "Bölüm" : "Department"}
+            lang={params.lang}
+          >
+            <Select.Group>
+              {Object.keys(departments)
+                .map((key: string) => ({
+                  value: key,
+                  /* @ts-ignore */
+                  label: departments[key][params.lang],
+                }))
+                .map((filter) => (
+                  <SelectItem value={filter.value} key={filter.label}>
+                    {filter.label}
                   </SelectItem>
                 ))}
-              </Select.Group>
-            </SelectMenu>
-            <SelectMenu
-              by={filterBy}
-              setBy={setFilterBy}
-              placeholder={params.lang === "tr" ? "Bölüm" : "Department"}
-              lang={params.lang}
-            >
-              <Select.Group>
-                {Object.keys(departments)
-                  .map((key: string) => ({
-                    value: key,
-                    /* @ts-ignore */
-                    label: departments[key][params.lang == "tr" ? "tr" : "en"],
-                  }))
-                  .map((filter) => (
-                    <SelectItem value={filter.value} key={filter.label}>
-                      {filter.label}
-                    </SelectItem>
-                  ))}
-              </Select.Group>
-            </SelectMenu>
-          </div>
-          {/* <CreateSuggestions /> */}
+            </Select.Group>
+          </SelectMenu>
         </div>
         <div className="flex flex-col w-full gap-2 overflow-visible overscroll-y-auto">
           {data.map(
@@ -83,12 +83,8 @@ export default function Home({ params }: { params: { lang: string } }) {
               (suggestion && (
                 <ProjectCard
                   author={suggestion.author}
-                  department={
-                    /* @ts-ignore */
-                    departments[suggestion.author.slice(3, -3)][
-                      params.lang == "tr" ? "tr" : "en"
-                    ]
-                  }
+                  /* @ts-ignore */                  
+                  department={departments[suggestion.author.slice(3, -3)]}
                   description={suggestion.content}
                   id={suggestion.id}
                   key={suggestion.id}
@@ -232,10 +228,12 @@ function ProjectCard({
 
 function CreateSuggestions() {
   return (
-    <button className="inline-flex items-center bg-[#fec748] justify-center rounded transition-colors duration-300 ease-in-out hover:bg-[#fec748]/90 px-[15px] text-zinc-900 text-[13px] leading-none h-[35px] gap-[5px] border-white/10 border hover:border-white/40 outline-none">
-      <span>+</span>
-      <span className="hidden md:block">Suggest</span>
-    </button>
+    <div className="flex flex-col items-center justify-center">
+      <button className="flex justify-center bg-[#fec748] rounded-xl p-2 h-10 w-10 md:w-auto text-zinc-900 hover:bg-[#fec748]/90 transition-colors duration-300 ease-in-out">
+        <span>+</span>
+        <span className="hidden md:block">Suggest</span>
+      </button>
+    </div>
   );
 }
 
