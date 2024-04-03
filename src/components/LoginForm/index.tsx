@@ -64,7 +64,7 @@ import { SubmitHandler, set, useForm } from "react-hook-form";
 import { Button } from "@/lib/ui/button";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/lib/ui/switch";
-const FormDemo = ({ language }: { language: string }) => {
+const LoginForn = ({ language }: { language: string }) => {
   const {
     register,
     handleSubmit,
@@ -187,4 +187,4 @@ const FormDemo = ({ language }: { language: string }) => {
   );
 };
 
-export default FormDemo;
+export default LoginForn;

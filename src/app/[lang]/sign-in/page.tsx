@@ -1,4 +1,4 @@
-import FormDemo from "@/components/Form";
+import LoginForn from "@/components/LoginForm";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -28,7 +28,7 @@ export default async function Home({ params }: { params: { lang: string } }) {
           height={200}
         />
         <div className="flex">
-          <FormDemo language={params.lang} />
+          <LoginForn language={params.lang} />
         </div>
       </div>
     </div>
