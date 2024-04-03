@@ -13,12 +13,37 @@ export default function Home({ params }: { params: { lang: string } }) {
         "Content-Type": "application/json",
       },
     }).then((res) => res.json());
-    setData(data || []);
+    setData(
+      data?.sort(
+        (a: any, b: any) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      ) || []
+    );
+    if (data.length) setSortBy("date");
     return data;
   }
   useEffect(() => {
     fetchSuggestions();
   }, []);
+  useEffect(() => {
+    switch (sortBy) {
+      case "date":
+        setData(
+          [...data].sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+        );
+        break;
+      case "upvotes":
+        setData([...data].sort((a, b) => a.upvotes - b.upvotes));
+        break;
+      case "stars":
+        setData([...data].sort((a, b) => a.stars - b.stars).reverse());
+        break;
+      default:
+        break;
+    }
+  }, [filterBy, sortBy]);
   return (
     <div className="container mx-auto py-10">
       <div className="flex flex-col items-center justify-center">
@@ -252,6 +277,7 @@ import { cn } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { departments } from "../../../lib/deps";
 import { SuggestDialog } from "../../../components/SuggestDialog";
+import { set } from "react-hook-form";
 
 function SelectMenu({
   by,
