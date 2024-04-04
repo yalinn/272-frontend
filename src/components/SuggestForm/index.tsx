@@ -73,7 +73,7 @@ const SuggestForm = ({
           </Form.Message>
         </div>
         <Form.Control asChild>
-          <input
+          <textarea
             className="bg-white/10 border w-full border-white/20 rounded-md px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             {...register("title", { required: true, maxLength: 50})}
           />
