@@ -101,7 +101,7 @@ export default function Home({ params }: { params: { lang: string } }) {
             </SelectMenu>
           </div>
           <SuggestDialog lang={params.lang}>
-            <CreateSuggestions />
+            <CreateSuggestions lang={params.lang} />
           </SuggestDialog>
         </div>
         <div className="flex flex-col w-full gap-2 overflow-visible overscroll-y-auto">
@@ -257,11 +257,13 @@ function ProjectCard({
   );
 }
 
-function CreateSuggestions() {
+function CreateSuggestions({ lang }: { lang: string }) {
   return (
     <div className="inline-flex items-center bg-[#fec748] justify-center rounded transition-colors duration-300 ease-in-out hover:bg-[#fec748]/90 px-[15px] text-zinc-900 text-[13px] leading-none h-[35px] gap-[5px] border-white/10 border hover:border-white/40 outline-none">
       <span>+</span>
-      <span className="hidden md:block">Suggest</span>
+      <span className="hidden md:block">
+        {lang == "tr" ? "Öneri" : "Suggest"}
+      </span>
     </div>
   );
 }
