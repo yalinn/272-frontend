@@ -16,9 +16,5 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { lang: string };
 }>) {
-  return (
-    <html lang={params.lang}>
-      <body className={font.className}>{children}</body>
-    </html>
-  );
+  return children;
 }

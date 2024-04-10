@@ -1,5 +1,5 @@
-import { Roboto } from "next/font/google";
-const inter = Roboto({ subsets: ["latin"], weight: ["400", "700"] });
+import { Arimo } from "next/font/google";
+const font = Arimo({ subsets: ["latin"], weight: ["400", "700"] });
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "tr" }];
 }
@@ -49,7 +49,7 @@ export default async function RootLayout({
   }
   return (
     <html lang={params.lang}>
-      <body className={cn(inter.className)}>
+      <body className={cn(font.className)}>
         <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#09090b] bg-[#fbfbfd]">
           <NavBar lang={lang} paths={paths} />
           {children}

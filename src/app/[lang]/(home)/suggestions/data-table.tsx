@@ -76,15 +76,37 @@ export const columns: ColumnDef<Suggestion>[] = [
     enableSorting: false,
     enableHiding: false,
   }, */
-  {
+  /* {
     accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="flex w-full justify-start p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const status = row.getValue("status");
+      return (
+        <div
+          className={
+            !!status
+              ? "Capitalized"
+              : "bg-gray-200/80 w-12 h-4 animate-pulse rounded-xl"
+          }
+        >
+          {status as string}
+        </div>
+      );
+    },
+  }, */
   {
-    accessorKey: "title",
+    accessorKey: "date",
     header: ({ column }) => {
       return (
         <Button
@@ -92,12 +114,113 @@ export const columns: ColumnDef<Suggestion>[] = [
           className="justify-start p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const date = row.getValue("date");
+      return (
+        <div
+          className={
+            !!date
+              ? "capitalize"
+              : "bg-gray-200/80 w-20 h-4 animate-pulse rounded-xl"
+          }
+        >
+          {" "}
+          {!!date ? new Date(row.getValue("date")).toLocaleDateString() : ""}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "department",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="justify-start p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Department
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const department = row.getValue("department");
+      return (
+        <div
+          className={
+            !!department
+              ? "capitalize"
+              : "bg-gray-200/80 w-20 h-4 animate-pulse rounded-xl"
+          }
+        >
+          {department as string}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "title",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="flex w-full justify-start p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
           Title
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("title")}</div>,
+    cell: ({ row }) => {
+      const title = row.getValue("title");
+      return (
+        <div
+          className={
+            !!title
+              ? "capitalize flex items-center justify-start p-0 h-4"
+              : "bg-gray-200/80 w-20 h-4 animate-pulse rounded-xl"
+          }
+        >
+          {title as string}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "author",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="justify-start p-0"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Author
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const author = row.getValue("author");
+      return (
+        <div
+          className={
+            !!author
+              ? "capitalize"
+              : "bg-gray-200/80 w-20 h-4 animate-pulse rounded-xl"
+          }
+        >
+          {author as string}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "content",
@@ -113,29 +236,19 @@ export const columns: ColumnDef<Suggestion>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("content")}</div>
-    ),
-  },
-  {
-    accessorKey: "stars",
-    header: ({ column }) => {
+    cell: ({ row }) => {
+      const content = row.getValue("content");
       return (
         <div
-          className="flex justify-end text-right p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={
+            !!content
+              ? "capitalize"
+              : "bg-gray-200/80 w-20 h-4 animate-pulse rounded-xl"
+          }
         >
-          Stars
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          {content as string}
         </div>
       );
-    },
-    cell: ({ row }) => {
-      const stars = parseFloat(row.getValue("stars"));
-
-      const formatted = `✨ ${stars}`;
-
-      return <div className="text-right font-medium">{formatted}</div>;
     },
   },
   {
@@ -161,8 +274,13 @@ export const columns: ColumnDef<Suggestion>[] = [
               Copy suggestor ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
+            <DropdownMenuItem>Report Suggestion</DropdownMenuItem>
             <DropdownMenuItem>Approve Suggestion</DropdownMenuItem>
-            <DropdownMenuItem>Reject Suggestion</DropdownMenuItem>
+            <DropdownMenuItem>Link Suggestion</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View Suggestion</DropdownMenuItem>
+            <DropdownMenuItem>View Author</DropdownMenuItem>
+            <DropdownMenuItem>View Department</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -242,9 +360,15 @@ export function DataTable({ data }: { data: Suggestion[] }) {
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
+                  if (
+                    !header.column.getFacetedRowModel().rows[0]._valuesCache[
+                      header.id
+                    ]
+                  )
+                    return <TableHead key={header.id}></TableHead>;
                   return (
                     <TableHead key={header.id}>
-                      {header.isPlaceholder
+                      {header.isPlaceholder && header.column.columns
                         ? null
                         : flexRender(
                             header.column.columnDef.header,

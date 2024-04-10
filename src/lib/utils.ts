@@ -5,8 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-import deps from "./deps";
-const departments = deps as Record<number | string, string>;
+import { departments as deps } from "./deps";
+const departments = deps as Record<string, { tr: string; en: string }>;
 export { departments };
 export type Suggestion = {
   id: string;

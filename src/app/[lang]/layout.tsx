@@ -11,5 +11,5 @@ export default function RootLayout({
   children: React.ReactNode;
   params: { lang: string };
 }>) {
-  return <html lang={params.lang}>{children}</html>;
+  return children;
 }

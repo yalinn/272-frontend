@@ -1,30 +1,60 @@
-import { API_URL, DOMAIN, sessionOptions } from "@/lib/constants";
-import { DataTable } from "./data-table";
-import { cookies } from "next/headers";
-import { getIronSession } from "iron-session";
+"use client";
+import { useEffect, useState } from "react";
+import { DataTable, Suggestion } from "./data-table";
+import { departments } from "@/lib/utils";
 
-async function getData(): Promise<any | any[]> {
-  const session = (await getIronSession(cookies(), sessionOptions)) as {
-    token: string;
-  };
-  const data = await fetch(API_URL + "/suggestions", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + session.token,
-      "Access-Control-Allow-Origin": DOMAIN,
-    },
-  }).then((res) => res.json());
-  return data || [];
-}
-
-export default async function DemoPage() {
-  const data = await getData();
-  if (data.message) {
-    return <div>{data.message}</div>;
+export default function SuggestionPage({
+  params,
+}: {
+  params: { lang: string };
+}) {
+  const [data, setData] = useState<any>(
+    Array(10).fill({
+      id: 0,
+      status: null,
+      title: null,
+      content: null,
+      department: null,
+      stars: 0,
+      date: null,
+      upvotes: 0,
+      vote: 0,
+    })
+  );
+  async function fetchSuggestions() {
+    const data = await fetch("/api/suggestions", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+    setData(
+      data
+        ?.sort(
+          (a: any, b: any) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime()
+        )
+        .map((d: Suggestion) => ({
+          ...d,
+          department:
+            departments[d.author.slice(3, -3)][
+              params.lang == "tr" ? "tr" : "en"
+            ],
+        })) || []
+    );
   }
+  useEffect(() => {
+    fetchSuggestions();
+  }, []);
   return (
     <div className="container mx-auto py-10">
-      <DataTable data={data} />
+      {data[0] ? (
+        <DataTable data={data} />
+      ) : (
+        <div className="flex flex-col items-center justify-center">
+          <div></div>
+        </div>
+      )}
     </div>
   );
 }
