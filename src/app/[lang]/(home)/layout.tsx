@@ -1,9 +1,5 @@
-import { Arimo } from "next/font/google";
-const font = Arimo({ subsets: ["latin"], weight: ["400", "700"] });
-export async function generateStaticParams() {
-  return [{ lang: "en" }, { lang: "tr" }];
-}
 
+import React from "react";
 import { cn } from "@/lib/utils";
 import getDictionary from "@/lang";
 import { getIronSession } from "iron-session";
@@ -11,6 +7,12 @@ import { cookies } from "next/headers";
 import { RedirectType, redirect } from "next/navigation";
 import { sessionOptions } from "@/lib/constants";
 import NavBar from "@/components/Navigation";
+
+import { Arimo } from "next/font/google";
+const font = Arimo({ subsets: ["latin"], weight: ["400", "700"] });
+export async function generateStaticParams() {
+  return [{ lang: "en" }, { lang: "tr" }];
+}
 
 export async function generateMetadata({
   params,

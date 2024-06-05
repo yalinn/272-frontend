@@ -22,7 +22,7 @@ export default function SuggestionPage({
     })
   );
   async function fetchSuggestions() {
-    const data = await fetch("/api/suggestions", {
+    const data = await fetch("/api/suggestions/requested", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

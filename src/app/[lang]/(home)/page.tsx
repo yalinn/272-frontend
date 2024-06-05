@@ -19,7 +19,7 @@ export default function Home({ params }: { params: { lang: string } }) {
           new Date(b.date).getTime() - new Date(a.date).getTime()
       ) || []
     );
-    if (data.length) setSortBy("date");
+    if (data?.length) setSortBy("date");
     return data;
   }
   useEffect(() => {
@@ -35,10 +35,10 @@ export default function Home({ params }: { params: { lang: string } }) {
         );
         break;
       case "upvotes":
-        setData([...data].sort((a, b) => a.upvotes - b.upvotes));
+        setData([...data].sort((a, b) => a?.upvotes - b?.upvotes));
         break;
       case "stars":
-        setData([...data].sort((a, b) => a.stars - b.stars).reverse());
+        setData([...data].sort((a, b) => a?.stars - b?.stars).reverse());
         break;
       default:
         break;
@@ -49,84 +49,98 @@ export default function Home({ params }: { params: { lang: string } }) {
       <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between w-full gap-4 items-center mb-4">
           <div className="flex h-12 gap-4 justify-start w-full items-center">
-            <SelectMenu
-              by={sortBy}
-              setBy={setSortBy}
-              placeholder={params.lang === "tr" ? "Sırala" : "Sort By"}
-              lang={params.lang}
-            >
-              <Select.Group>
-                {[
-                  {
-                    by: "date",
-                    tr: "Tarih",
-                    en: "Date",
-                  },
-                  {
-                    by: "upvotes",
-                    tr: "Oylama",
-                    en: "Upvotes",
-                  },
-                  {
-                    by: "stars",
-                    tr: "Puan",
-                    en: "Stars",
-                  },
-                ].map((filter) => (
-                  <SelectItem value={filter.by} key={filter.by}>
-                    {filter[params.lang == "tr" ? "tr" : "en"]}
-                  </SelectItem>
-                ))}
-              </Select.Group>
-            </SelectMenu>
-            <SelectMenu
-              by={filterBy}
-              setBy={setFilterBy}
-              placeholder={params.lang === "tr" ? "Bölüm" : "Department"}
-              lang={params.lang}
-            >
-              <Select.Group>
-                {Object.keys(departments)
-                  .map((key: string) => ({
-                    value: key,
-                    /* @ts-ignore */
-                    label: departments[key][params.lang == "tr" ? "tr" : "en"],
-                  }))
-                  .map((filter) => (
-                    <SelectItem value={filter.value} key={filter.label}>
-                      {filter.label}
+            {data.length > 0 && (
+              <SelectMenu
+                by={sortBy}
+                setBy={setSortBy}
+                placeholder={params.lang === "tr" ? "Sırala" : "Sort By"}
+                lang={params.lang}
+              >
+                <Select.Group>
+                  {[
+                    {
+                      by: "date",
+                      tr: "Tarih",
+                      en: "Date",
+                    },
+                    {
+                      by: "upvotes",
+                      tr: "Oylama",
+                      en: "Upvotes",
+                    },
+                    {
+                      by: "stars",
+                      tr: "Puan",
+                      en: "Stars",
+                    },
+                  ].map((filter) => (
+                    <SelectItem value={filter.by} key={filter.by}>
+                      {filter[params.lang == "tr" ? "tr" : "en"]}
                     </SelectItem>
                   ))}
-              </Select.Group>
-            </SelectMenu>
+                </Select.Group>
+              </SelectMenu>
+            )}
+            {data.length > 0 && (
+              <SelectMenu
+                by={filterBy}
+                setBy={setFilterBy}
+                placeholder={params.lang === "tr" ? "Bölüm" : "Department"}
+                lang={params.lang}
+              >
+                <Select.Group>
+                  {Object.keys(departments)
+                    .map((key: string) => ({
+                      value: key,
+                      label:
+                        departments[key as unknown as keyof typeof departments][
+                          params.lang == "tr" ? "tr" : "en"
+                        ],
+                    }))
+                    .map((filter) => (
+                      <SelectItem value={filter.value} key={filter.label}>
+                        {filter.label}
+                      </SelectItem>
+                    ))}
+                </Select.Group>
+              </SelectMenu>
+            )}
           </div>
           <SuggestDialog lang={params.lang}>
             <CreateSuggestions lang={params.lang} />
           </SuggestDialog>
         </div>
         <div className="flex flex-col w-full gap-2 overflow-visible overscroll-y-auto">
-          {data.map(
-            (suggestion: Suggestion, i: number) =>
-              (suggestion && (
-                <ProjectCard
-                  author={suggestion.author}
-                  department={
-                    /* @ts-ignore */
-                    departments[suggestion.author.slice(3, -3)][
-                      params.lang == "tr" ? "tr" : "en"
-                    ]
-                  }
-                  description={suggestion.content}
-                  id={suggestion.id}
-                  key={suggestion.id}
-                  title={suggestion.title}
-                  href="#"
-                  stars={suggestion.stars}
-                  date={suggestion.date}
-                  upvotes={suggestion.upvotes}
-                  vote={suggestion.vote || 0}
-                />
-              )) || <Loading key={i} />
+          {data.length > 0 ? (
+            data.map(
+              (suggestion: Suggestion, i: number) =>
+                (suggestion && (
+                  <ProjectCard
+                    author={suggestion.author}
+                    department={
+                      /* @ts-ignore */
+                      departments[suggestion.author.slice(3, -3)][
+                        params.lang == "tr" ? "tr" : "en"
+                      ]
+                    }
+                    description={suggestion.content}
+                    id={suggestion.id}
+                    key={suggestion.id}
+                    title={suggestion.title}
+                    href="#"
+                    stars={suggestion.stars}
+                    date={suggestion.date}
+                    upvotes={suggestion.upvotes}
+                    vote={suggestion.vote || 0}
+                  />
+                )) || <Loading key={i} />
+            )
+          ) : (
+            <p className="text-center text-gray-600">
+              {params.lang == "tr"
+                ? "Henüz öneri bulunmamaktadır."
+                : "There are no suggestions yet."}
+            </p>
           )}
         </div>
       </div>

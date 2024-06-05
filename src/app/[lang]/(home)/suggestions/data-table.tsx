@@ -231,7 +231,7 @@ export const columns: ColumnDef<Suggestion>[] = [
           className="justify-start p-0"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Content
+          Status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -274,8 +274,33 @@ export const columns: ColumnDef<Suggestion>[] = [
               Copy suggestor ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Report Suggestion</DropdownMenuItem>
-            <DropdownMenuItem>Approve Suggestion</DropdownMenuItem>
+            {["report", "approve", "reject"].map((action) => {
+              return (
+                <DropdownMenuItem
+                  key={action}
+                  onClick={() => {
+                    fetch(
+                      `/api/suggestions/requested/${payment.id}`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ action }),
+                      }
+                    ).then((res) => {
+                      if (res.ok) {
+                        alert("Suggestion " + action + "ed successfully");
+                      } else {
+                        alert("Something went wrong");
+                      }
+                    });
+                  }}
+                >
+                  {action[0].toUpperCase() + action.slice(1)} Suggestion
+                </DropdownMenuItem>
+              );
+            })}
             <DropdownMenuItem>Link Suggestion</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View Suggestion</DropdownMenuItem>
