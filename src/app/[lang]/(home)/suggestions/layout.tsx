@@ -26,36 +26,26 @@ export async function generateMetadata({
         : "Çankaya Üniversitesi Probee Uygulaması",
   };
 }
-export default async function RootLayout({
+export default function RootLayout({
   children,
   params,
 }: Readonly<{
   children: React.ReactNode;
   params: { lang: string };
 }>) {
-  const session = await getIronSession<{
+  return getIronSession<{
     token: any;
     user: { roles: string[] };
-  }>(cookies(), sessionOptions);
-  if (!session.token) {
-    redirect("/sign-in", RedirectType.push);
-  }
-  if (!session.user) {
-    redirect("/api/logout", RedirectType.push);
-  }
-  const lang = await getDictionary(params.lang);
-  const paths = [{ route: "/", name: lang.route_home }];
-  if (session.user.roles.includes("admin")) {
-    paths.push({ route: "/suggestions", name: lang.route_suggestions });
-  }
-  return (
-    <html lang={params.lang}>
-      <body className={cn(font.className)}>
-        <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#09090b] bg-[#fbfbfd]">
-          <NavBar lang={lang} paths={paths} />
-          {children}
-        </main>
-      </body>
-    </html>
-  );
+  }>(cookies(), sessionOptions).then((session) => {
+    if (!session.token) {
+      return redirect("/sign-in", RedirectType.push);
+    }
+    if (!session.user) {
+      return redirect("/api/logout", RedirectType.push);
+    }
+    if (!session.user.roles.includes("admin")) {
+      return redirect("/", RedirectType.push);
+    }
+    return children;
+  });
 }
