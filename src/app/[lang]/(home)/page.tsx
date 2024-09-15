@@ -119,7 +119,7 @@ export default function Home({ params }: { params: { lang: string } }) {
                     author={suggestion.author}
                     department={
                       /* @ts-ignore */
-                      departments[suggestion.author.slice(d.author.startsWith("c") ? 3 : 4, -3)][params.lang == "tr" ? "tr" : "en"]
+                      departments[suggestion.author.slice(suggestion.author.startsWith("c") ? 3 : 4, -3)][params.lang == "tr" ? "tr" : "en"]
                     }
                     description={suggestion.content}
                     id={suggestion.id}
