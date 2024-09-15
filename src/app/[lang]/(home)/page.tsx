@@ -228,8 +228,8 @@ function ProjectCard({
     setVoted(v);
   }
   return (
-    <div className="p-4 min-h-64 lg:min-h-40 border-gray-200 rounded-xl border-2 relative">
-      <p className="text-lg font-semibold max-w-40 md:max-w-80">{title}</p>
+    <div className="p-4 min-h-64 lg:min-h-60 flex flex-col border-gray-200 rounded-xl border-2 relative gap-2">
+      <p className="text-lg font-semibold max-w-36 md:max-w-80">{title}</p>
       <p className="mt-2 max-h-36 text-gray-600 max-w-44 md:max-w-96 lg:max-w-[36rem]">
         {description.slice(0, 60) + (description.length > 60 ? "..." : "")}
       </p>
