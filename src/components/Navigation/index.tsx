@@ -2,12 +2,26 @@ import { LangType } from "@/lang";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import SheetBar from "./SheetBar";
-export default function NavBar({
+import { Button } from "@/lib/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/lib/ui/dropdown-menu";
+import { User } from "@/@types/base";
+
+export default async function NavBar({
   lang,
   paths,
+  user,
 }: {
   lang: LangType;
   paths: { route: string; name: string }[];
+  user: User;
 }) {
   return (
     <nav
@@ -17,32 +31,42 @@ export default function NavBar({
       )}
     >
       <div className="flex">
-        <SheetBar
-          lang={lang}
-          paths={paths}
-        />
-        {/* <Link
-            className="flex items-center cursor-default selection:bg-transparent"
-            href="/"
-          >
-            <HiveIcon className="w-8" />
-            <h1 className={cn("text-2xl font-bold text-[#fec748]", "ml-2")}>
-              Probee
-            </h1>
-          </Link> */}
+        <SheetBar lang={lang} paths={paths} />
       </div>
 
-      <Link href="/api/logout" title="Sign out">
-        <div
-          className={cn(
-            "text-xl font-semibold text-neutral-300",
-            "hover:text-neutral-100",
-            "flex items-center cursor-pointer selection:bg-transparent"
-          )}
-        >
-          {lang.sign_out}
-        </div>
-      </Link>
+      <div
+        className={cn(
+          "text-xl font-semibold text-neutral-300",
+          "hover:text-neutral-100 w-8 h-8",
+          "flex items-center cursor-pointer selection:bg-transparent",
+          "hover:bg-amber-500/25",
+        )}
+      >
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="flex flex-col">
+              <span className="text-lg">
+                {user.full_name}
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56" align="end">
+            <DropdownMenuLabel>{lang["user_panel"]}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              {
+                /* @ts-ignore */
+                lang.departments[user.department]
+              }
+            </DropdownMenuItem>
+            <Link href="/api/logout">
+              <DropdownMenuItem className="p-2 text-red-500 hover:text-red-300 w-full duration-300">
+                {lang["sign_out"]}
+              </DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </nav>
   );
 }

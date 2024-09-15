@@ -94,7 +94,7 @@ export default function Home({ params }: { params: { lang: string } }) {
                       value: key,
                       label:
                         departments[key as unknown as keyof typeof departments][
-                          params.lang == "tr" ? "tr" : "en"
+                        params.lang == "tr" ? "tr" : "en"
                         ],
                     }))
                     .map((filter) => (
@@ -119,9 +119,7 @@ export default function Home({ params }: { params: { lang: string } }) {
                     author={suggestion.author}
                     department={
                       /* @ts-ignore */
-                      departments[suggestion.author.slice(3, -3)][
-                        params.lang == "tr" ? "tr" : "en"
-                      ]
+                      departments[suggestion.author.slice(d.author.startsWith("c") ? 3 : 4, -3)][params.lang == "tr" ? "tr" : "en"]
                     }
                     description={suggestion.content}
                     id={suggestion.id}
@@ -166,8 +164,8 @@ function Loading({
               size={16}
               fill={"#fff"}
               voted={0}
-              setVoted={() => {}}
-              voteSuggestion={() => {}}
+              setVoted={() => { }}
+              voteSuggestion={() => { }}
             />
             <div className="flex mt-3 items-center justify-end  ">
               <span className="text-xs rounded-xl bg-gray-600 h-3 w-10 text-end"></span>
@@ -345,7 +343,7 @@ const SelectItem = React.forwardRef(
       children,
       className,
       ...props
-    }: { children: React.ReactNode; className: string; [key: string]: any },
+    }: { children: React.ReactNode; className: string;[key: string]: any },
     forwardedRef
   ) => {
     return (

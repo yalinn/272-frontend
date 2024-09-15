@@ -3,7 +3,7 @@ const config = {
     PUBLIC_URL: "https://www.yalin.app",
     WEBSITE_VERSION: '0.0.1',
     API_ENDPOINT: "https://api-probee.yalin.app",
-    API_PORT: "8080",
+    API_PORT: "7070",
     WS_ENDPOINT: "wss://ws-probee.yalin.app/",
     WS_PORT: '3500',
     COOKIE_NAME: "probee",

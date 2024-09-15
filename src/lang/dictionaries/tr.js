@@ -1,4 +1,5 @@
 const tr = {
+    user_panel: "Kullanıcı Paneli",
     sign_in: "Giriş",
     sign_out: "Çıkış",
     im_student: "Öğrenciyim",

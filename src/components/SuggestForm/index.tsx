@@ -43,6 +43,7 @@ const SuggestForm = ({
   const [loading, setLoading] = React.useState(false);
   const [err, setErr] = React.useState<string | null>(null);
   const onSubmit: SubmitHandler<any> = async (data) => {
+    if (loading) return;
     setLoading(true);
     const res = await fetch(`/api/suggestions`, {
       method: "POST",
@@ -52,6 +53,7 @@ const SuggestForm = ({
       body: JSON.stringify(data),
     }).then((res) => {
       setLoading(false);
+      setOpen(false);
       return res.json();
     });
     if (res.length) {

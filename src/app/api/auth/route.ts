@@ -2,9 +2,13 @@ import { type NextRequest } from "next/server";
 import { API_URL, sessionOptions } from "@/lib/constants";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
+import { User } from "@/@types/base";
 
 export async function POST(request: NextRequest) {
-  const session = await getIronSession(cookies(), sessionOptions);
+  const session = await getIronSession<{
+    token: string;
+    user: User;
+  }>(cookies(), sessionOptions);
   try {
     const body = await request.json();
     const data = await fetch(API_URL + "/session", {
@@ -26,9 +30,7 @@ export async function POST(request: NextRequest) {
     if (data.error) {
       return Response.json(data, { status: data.status });
     } else {
-      /* @ts-ignore */
       session.token = data.token;
-      /* @ts-ignore */
       session.user = data.user;
       await session.save();
       return Response.json(data, { status: 200 });
@@ -39,14 +41,15 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  const session = await getIronSession(cookies(), sessionOptions);
-  /* @ts-ignore */
+  const session = await getIronSession<{
+    token: string;
+    user: User;
+  }>(cookies(), sessionOptions);
   if (session.token) {
     const data = await fetch(API_URL + "/session", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        /* @ts-ignore */
         Authorization: `Bearer ${session.token}`,
       },
     }).then((res) => res.json());
@@ -57,14 +60,15 @@ export async function GET(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const session = await getIronSession(cookies(), sessionOptions);
-  /* @ts-ignore */
+  const session = await getIronSession<{
+    token: string;
+    user: User;
+  }>(cookies(), sessionOptions);
   if (session.token) {
     const data = await fetch(API_URL + "/session", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        /* @ts-ignore */
         Authorization: `Bearer ${session.token}`,
       },
     }).then((res) => res.json());

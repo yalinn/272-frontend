@@ -8,6 +8,7 @@ import { sessionOptions } from "@/lib/constants";
 import NavBar from "@/components/Navigation";
 
 import { Arimo } from "next/font/google";
+import { User } from "@/@types/base";
 const font = Arimo({ subsets: ["latin"], weight: ["400", "700"] });
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "tr" }];
@@ -35,7 +36,7 @@ export default async function RootLayout({
 }>) {
   const session = await getIronSession<{
     token: any;
-    user: { roles: string[] };
+    user: User
   }>(cookies(), sessionOptions);
   if (!session.token) {
     redirect("/sign-in", RedirectType.push);
@@ -48,11 +49,14 @@ export default async function RootLayout({
   if (session.user.roles.includes("admin")) {
     paths.push({ route: "/suggestions", name: lang.route_suggestions });
   }
+  if (!session.user.full_name || session.user.full_name == "") {
+    redirect("/api/logout", RedirectType.push);
+  }
   return (
     <html lang={params.lang}>
       <body className={cn(font.className)}>
         <main className="flex min-h-screen flex-col items-center justify-between- dark:bg-[#09090b] bg-[#fbfbfd]">
-          <NavBar lang={lang} paths={paths} />
+          <NavBar lang={lang} paths={paths} user={session.user} />
           {children}
         </main>
       </body>

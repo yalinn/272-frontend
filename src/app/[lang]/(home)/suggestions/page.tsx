@@ -37,8 +37,8 @@ export default function SuggestionPage({
         .map((d: Suggestion) => ({
           ...d,
           department:
-            departments[d.author.slice(3, -3)][
-              params.lang == "tr" ? "tr" : "en"
+            departments[d.author.slice(d.author.startsWith("c") ? 3 : 4, -3)][
+            params.lang == "tr" ? "tr" : "en"
             ],
         })) || []
     );
