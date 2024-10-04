@@ -1,4 +1,5 @@
 const tr = {
+    curriculum: "Müfredat",
     user_panel: "Kullanıcı Paneli",
     sign_in: "Giriş",
     sign_out: "Çıkış",

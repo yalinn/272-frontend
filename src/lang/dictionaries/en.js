@@ -1,4 +1,5 @@
 const en = {
+    curriculum: "Curriculum",
     user_panel: "User Panel",
     sign_in: "Sign In",
     sign_out: "Sign Out",

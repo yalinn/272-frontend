@@ -45,7 +45,13 @@ export default async function RootLayout({
     redirect("/api/logout", RedirectType.push);
   }
   const lang = await getDictionary(params.lang);
-  const paths = [{ route: "/", name: lang.route_home }];
+  const paths = [
+    { route: "/", name: lang.route_home },
+    {
+      route: "/curriculum",
+      name: lang.curriculum,
+    }
+  ];
   if (session.user.roles.includes("admin")) {
     paths.push({ route: "/suggestions", name: lang.route_suggestions });
   }
