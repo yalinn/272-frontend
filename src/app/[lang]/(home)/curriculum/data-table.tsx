@@ -34,20 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/ui/table";
-/* 
 
-{
-    "code": "101",
-    "course_id": "103453",
-    "course_type": "Semester Course",
-    "course_code": "PHYS 131",
-    "course_name": "Physics I",
-    "credits": "3 2 4 (6.00)",
-    "grade": "DD",
-    "semester": 1,
-    "year": 1
-  },
- */
 export type Course = {
   code: string;
   course_id: string;
