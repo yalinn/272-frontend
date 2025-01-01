@@ -4,6 +4,7 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { User } from "@/@types/base";
 
+export const maxDuration = 60; // 1 minute
 export async function GET(request: NextRequest) {
   const session = await getIronSession<{
     token: string;

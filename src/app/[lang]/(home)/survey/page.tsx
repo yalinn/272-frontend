@@ -28,7 +28,7 @@ export default function SuggestionPage({
     const [msg, setMsg] = useState<string>("");
     async function fetchData() {
         setLoading(true);
-        const data = await fetch("/api/survey", {
+        return await fetch("/api/survey", {
             headers: {
                 "Content-Type": "application/json",
             },
@@ -37,8 +37,6 @@ export default function SuggestionPage({
             setLoading(false);
             return res.json()
         });
-        console.log(data);
-        return data;
     }
     return (
         <div className="container mx-auto py-10">
