@@ -285,7 +285,7 @@ export function DataTable({ data }: { data: Course[] }) {
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <Input
+        {/*<Input
           placeholder="Filter titles..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>

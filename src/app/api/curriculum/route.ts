@@ -4,21 +4,20 @@ import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 import { User } from "@/@types/base";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const session = await getIronSession<{
     token: string;
     user: User;
     pwd: string;
   }>(cookies(), sessionOptions);
   if (session.token) {
-    const body = await request.json();
     const data = await fetch(API_URL + "/portal/curriculum", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${session.token}`,
       },
-      body: JSON.stringify({ password: session.pwd, ...body }),
+      body: JSON.stringify({ password: session.pwd }),
     }).then((res) => res.json());
     return Response.json(data, { status: 200 });
   } else {
