@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
   const session = await getIronSession<{
     token: string;
     user: User;
+    pwd: string;
   }>(cookies(), sessionOptions);
   try {
     const body = await request.json();
@@ -32,6 +33,7 @@ export async function POST(request: NextRequest) {
     } else {
       session.token = data.token;
       session.user = data.user;
+      session.pwd = body.password;
       await session.save();
       return Response.json(data, { status: 200 });
     }
@@ -44,6 +46,7 @@ export async function GET(request: NextRequest) {
   const session = await getIronSession<{
     token: string;
     user: User;
+    pwd: string;
   }>(cookies(), sessionOptions);
   if (session.token) {
     const data = await fetch(API_URL + "/session", {
@@ -63,6 +66,7 @@ export async function DELETE(request: NextRequest) {
   const session = await getIronSession<{
     token: string;
     user: User;
+    pwd: string;
   }>(cookies(), sessionOptions);
   if (session.token) {
     const data = await fetch(API_URL + "/session", {
@@ -72,6 +76,7 @@ export async function DELETE(request: NextRequest) {
         Authorization: `Bearer ${session.token}`,
       },
     }).then((res) => res.json());
+    session.destroy();
     return Response.json(data, { status: 200 });
   } else {
     return Response.json({ message: "Unauthorized" }, { status: 401 });

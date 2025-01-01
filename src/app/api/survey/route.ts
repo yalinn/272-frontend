@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   }>(cookies(), sessionOptions);
   if (session.token) {
     const body = await request.json();
-    const data = await fetch(API_URL + "/portal/curriculum", {
+    const data = await fetch(API_URL + "/portal/survey", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
