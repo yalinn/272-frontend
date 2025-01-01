@@ -40,25 +40,29 @@ export default async function NavBar({
           "hover:text-neutral-100 w-8 h-8",
           "flex items-center cursor-pointer selection:bg-transparent",
           "hover:bg-amber-500/25",
+          "items-center justify-center"
         )}
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex flex-col">
-              <span className="text-lg">
-                {user.full_name}
+            <Button variant="outline" className="flex flex-col items-end">
+              <span className="text-lg shrink-0 items-end text-right">
+                {"Menü"}
               </span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56" align="end">
             <DropdownMenuLabel>{lang["user_panel"]}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              {user.full_name}
+            </DropdownMenuItem>
             <DropdownMenuItem>
               {
                 /* @ts-ignore */
                 lang.departments[user.department]
               }
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <Link href="/api/logout">
               <DropdownMenuItem className="p-2 text-red-500 hover:text-red-300 w-full duration-300">
                 {lang["sign_out"]}
