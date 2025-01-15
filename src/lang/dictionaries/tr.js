@@ -2,6 +2,8 @@ const tr = {
     curriculum: "Müfredat",
     survey: "Anket doldurucu",
     surveys: "Anketleri doldur",
+    haysev_submits: "Haysev Gönderileri",
+    haysev_takvim: "Haysev Takvimi",
     user_panel: "Kullanıcı Paneli",
     sign_in: "Giriş",
     sign_out: "Çıkış",

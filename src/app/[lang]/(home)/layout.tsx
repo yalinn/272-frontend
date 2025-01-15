@@ -53,9 +53,13 @@ export default async function RootLayout({
     },
     { route: "/survey", name: lang.survey },
     { route: "/surveys", name: lang.surveys },
+    { route: "/haysev/takvim", name: lang.haysev_takvim },
   ];
   if (session.user.roles.includes("admin")) {
     paths.push({ route: "/suggestions", name: lang.route_suggestions });
+  }
+  if (session.user.roles.includes("haysev_admin")) {
+    paths.push({ route: "/haysev/admin", name: lang.haysev_submits });
   }
   if (!session.user.full_name || session.user.full_name == "") {
     redirect("/api/logout", RedirectType.push);

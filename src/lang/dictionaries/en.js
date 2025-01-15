@@ -2,6 +2,8 @@ const en = {
     curriculum: "Curriculum",
     survey: "Survey Filler",
     surveys: "Fill Surveys",
+    haysev_submits: "Haysev Submits",
+    haysev_takvim: "Haysev Calendar",
     user_panel: "User Panel",
     sign_in: "Sign In",
     sign_out: "Sign Out",
