@@ -52,6 +52,7 @@ export default async function RootLayout({
       name: lang.curriculum,
     },
     { route: "/survey", name: lang.survey },
+    { route: "/surveys", name: lang.surveys },
   ];
   if (session.user.roles.includes("admin")) {
     paths.push({ route: "/suggestions", name: lang.route_suggestions });

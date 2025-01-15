@@ -1,6 +1,7 @@
 const tr = {
     curriculum: "Müfredat",
     survey: "Anket doldurucu",
+    surveys: "Anketleri doldur",
     user_panel: "Kullanıcı Paneli",
     sign_in: "Giriş",
     sign_out: "Çıkış",
